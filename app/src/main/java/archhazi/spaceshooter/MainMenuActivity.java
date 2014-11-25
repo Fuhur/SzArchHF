@@ -18,7 +18,7 @@ public class MainMenuActivity extends Activity {
         Intent intent = new Intent(this, GameActivity.class);
 
         intent.putExtra(SEED_KEY,0);
-        intent.putExtra(LENGTH_KEY,5f);
+        intent.putExtra(LENGTH_KEY,35f);
         intent.putExtra(MULTIPLAYER_KEY,false);
 
         startActivity(intent);
@@ -30,7 +30,7 @@ public class MainMenuActivity extends Activity {
         // TO DO
         // HANDSHAKING
         intent.putExtra(SEED_KEY,0);
-        intent.putExtra(LENGTH_KEY,30);
+        intent.putExtra(LENGTH_KEY,5f);
         intent.putExtra(MULTIPLAYER_KEY,true);
 
         startActivity(intent);
