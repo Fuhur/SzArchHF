@@ -17,11 +17,18 @@ public class SpaceShip{
     private float lengthRatio = 0.12f;
     private float widthRatio = 0.1f;
 
+    private float startVelocityY = 0.6f;
+    private float afterCollisionVelocityY = 0f;
+
     private float shipVelocityX = 1/8f;
-    private float shipVelocityY = 0.6f;
+    private float shipVelocityY = startVelocityY;
     private float maxVelocityX = 0.5f;
     private float shipAccelerationY = 0.6f;
     private float shipAccelerationX = 0.003f;
+
+    private boolean invincible = false;
+    private float invincibleSince = 0;
+    private final float invincibilityTimeSpan = 2; // ms
 
     private float sideLength = -1;
 
@@ -45,13 +52,29 @@ public class SpaceShip{
 
         getPosition().X += deltaX;
 
-        getPosition().X = Math.min(1 - widthRatio / 2 , getPosition().X + widthRatio / 2);
-        getPosition().X = Math.max(0 + widthRatio / 2, getPosition().X - widthRatio / 2);
+        getPosition().X = Math.min(1 - widthRatio / 2 , getPosition().X);
+        getPosition().X = Math.max(0 + widthRatio / 2, getPosition().X);
 
         getPosition().Y += elapsedS * shipVelocityY;
+
+        if (invincible){
+            invincibleSince += elapsedS;
+
+            shipVelocityY += (startVelocityY-afterCollisionVelocityY) / invincibilityTimeSpan * elapsedS;
+        }
+
+        if (invincible && invincibleSince > invincibilityTimeSpan){
+            invincible = false;
+            invincibleSince = 0;
+        }
     }
 
     public void accelerate(float elapsedS){
+
+        if (invincible){
+            return;
+        }
+
         shipVelocityY += shipAccelerationY * elapsedS;
         shipVelocityX += shipAccelerationX * elapsedS;
     }
@@ -73,7 +96,12 @@ public class SpaceShip{
         if (asOpponent){
             paint.setColor(Color.BLUE);
         } else {
-            paint.setColor(Color.RED);
+            if (invincible){
+                paint.setColor(Color.DKGRAY);
+            } else {
+                paint.setColor(Color.RED);
+            }
+
         }
 
 
@@ -126,8 +154,23 @@ public class SpaceShip{
         this.position = position;
     }
 
-
     public void setPosition(MyVector position) {
         this.position = position;
+    }
+
+    public void collided() {
+
+        if (invincible){
+            return;
+        }
+
+        shipVelocityY = afterCollisionVelocityY;
+
+        invincible = true;
+        invincibleSince = 0;
+    }
+
+    public boolean isInvincible() {
+        return invincible;
     }
 }

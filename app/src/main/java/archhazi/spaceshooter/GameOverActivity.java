@@ -3,6 +3,7 @@ package archhazi.spaceshooter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -27,8 +28,6 @@ public class GameOverActivity extends Activity {
     private ServerProxy serverProxy = new ServerProxy();
 
     private TextView scoreText;
-    private TextView nameText;
-    private EditText editName;
     private Button sendButton;
 
     private TextView resultText;
@@ -50,14 +49,10 @@ public class GameOverActivity extends Activity {
 
         boolean multiplayer = intent.getBooleanExtra(MainMenuActivity.MULTIPLAYER_KEY,false);
 
-        nameText = (TextView) findViewById(R.id.yourName_text);
-        editName = (EditText) findViewById(R.id.name_input);
         sendButton = (Button) findViewById(R.id.sendScore_button);
         resultText = (TextView) findViewById(R.id.result_text);
 
         if (!multiplayer){
-            nameText.setVisibility(View.INVISIBLE);
-            editName.setVisibility(View.INVISIBLE);
             sendButton.setVisibility(View.INVISIBLE);
             resultText.setVisibility(View.INVISIBLE);
         } else {
@@ -71,7 +66,10 @@ public class GameOverActivity extends Activity {
     }
 
     public void sendScore(View view){
-        final String name = editName.getText().toString();
+
+        SharedPreferences settings = getSharedPreferences(MainMenuActivity.USER_INFO, 0);
+
+        final String name = settings.getString(MainMenuActivity.PLAYER_NAME_KEY, "").toString();
         final Float score = Float.parseFloat(scoreText.getText().toString());
 
         Thread uploadThread = new Thread() {
