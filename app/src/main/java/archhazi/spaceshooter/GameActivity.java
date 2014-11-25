@@ -1,11 +1,5 @@
 package archhazi.spaceshooter;
 
-import archhazi.spaceshooter.Model.BackgroundSpace;
-import archhazi.spaceshooter.Model.CollisionDetector;
-import archhazi.spaceshooter.Model.CollisionType;
-import archhazi.spaceshooter.Model.ForegroundSpace;
-import archhazi.spaceshooter.Model.SpaceShip;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +13,20 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import archhazi.spaceshooter.Communication.ServerProxy;
+import archhazi.spaceshooter.Model.BackgroundSpace;
+import archhazi.spaceshooter.Model.CollisionDetector;
+import archhazi.spaceshooter.Model.CollisionType;
+import archhazi.spaceshooter.Model.ForegroundSpace;
+import archhazi.spaceshooter.Model.SpaceShip;
 
 public class GameActivity extends Activity implements SensorEventListener {
 
@@ -98,6 +106,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         private float trackLength;
 
         private long startTime = -1;
+
+        private ServerProxy serverProxy = new ServerProxy();
 
         @Override
         protected void onDraw(Canvas canvas) {
@@ -200,6 +210,28 @@ public class GameActivity extends Activity implements SensorEventListener {
             lastTime = actTime;
 
             view.invalidate();
+
+            Thread uploadThread = new Thread() {
+                public void run() {
+                    JSONObject request = new JSONObject();
+                    try {
+                        request.put("X", spaceShip.getPosition().X);
+                        request.put("Y", spaceShip.getPosition().Y);
+
+                        final HttpResponse response = serverProxy.sendMessageToServer(request.toString(), "Tick");
+                        String entity = EntityUtils.toString(response.getEntity());
+                        JSONObject json = new JSONObject(entity);
+
+                        JSONObject opponentPosition = json.getJSONObject("OpponentPosition");
+                        float opponentX = (float) opponentPosition.getDouble("X");
+                        float opponentY = (float) opponentPosition.getDouble("Y");
+                        opponent.setPosition(new MyVector(opponentX, opponentY));
+                    } catch (JSONException e) {
+                    } catch (IOException e) {
+                    }
+                }
+            };
+            uploadThread.start();
         }
 
         public void setSeed(int seed){

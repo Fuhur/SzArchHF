@@ -76,15 +76,14 @@ public class GameOverActivity extends Activity {
 
         Thread uploadThread = new Thread() {
             public void run() {
-                JSONObject highScoreJSON = new JSONObject();
+                JSONObject request = new JSONObject();
                 try {
-                    highScoreJSON.put("Name", name);
-                    highScoreJSON.put("DeviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
-                    highScoreJSON.put("Score", score);
+                    request.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                    request.put("score", score);
                 } catch (JSONException e) {
                     Log.d(TAG, e.getMessage());
                 }
-                final HttpResponse response = serverProxy.sendMessageToServer(highScoreJSON.toString(), "UploadHighScore");
+                final HttpResponse response = serverProxy.sendMessageToServer(request.toString(), "UploadHighScore");
                 runOnUiThread(new Runnable() {
                     public void run() {
                         if (response.getStatusLine().getStatusCode() == 200) {

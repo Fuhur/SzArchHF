@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="Your Score: "
+            android:text="@string/your_score"
             android:textColor="@color/black"
             android:textSize="24dp" />
 
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="45dp"
-        android:text="Your Name:"
+        android:text="@string/your_name"
         android:textColor="@color/black"
         android:textSize="24dp" />
 

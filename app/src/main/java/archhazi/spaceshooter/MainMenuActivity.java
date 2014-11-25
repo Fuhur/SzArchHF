@@ -32,13 +32,7 @@ public class MainMenuActivity extends Activity {
     }
 
     public void startMultiPlayerGame(View view){
-        Intent intent = new Intent(this, GameActivity.class);
-
-        // TO DO
-        // HANDSHAKING
-        intent.putExtra(SEED_KEY,0);
-        intent.putExtra(LENGTH_KEY,30f);
-        intent.putExtra(MULTIPLAYER_KEY,true);
+        Intent intent = new Intent(this, LobbyActivity.class);
 
         startActivity(intent);
     }
