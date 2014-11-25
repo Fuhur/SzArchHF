@@ -52,8 +52,8 @@ public class SpaceShip{
 
         getPosition().X += deltaX;
 
-        getPosition().X = Math.min(1 - widthRatio / 2 , getPosition().X + widthRatio / 2);
-        getPosition().X = Math.max(0 + widthRatio / 2, getPosition().X - widthRatio / 2);
+        getPosition().X = Math.min(1 - widthRatio / 2 , getPosition().X);
+        getPosition().X = Math.max(0 + widthRatio / 2, getPosition().X);
 
         getPosition().Y += elapsedS * shipVelocityY;
 
