@@ -17,8 +17,9 @@ public class SpaceShip{
     private float lengthRatio = 0.12f;
     private float widthRatio = 0.1f;
 
-    private float shipVelocityX = 0.01f;
+    private float shipVelocityX = 1/8f;
     private float shipVelocityY = 0.6f;
+    private float maxVelocityX = 0.5f;
     private float shipAccelerationY = 0.6f;
     private float shipAccelerationX = 0.003f;
 
@@ -36,7 +37,13 @@ public class SpaceShip{
 
         deltaX *= -1;
 
-        getPosition().X += deltaX * shipVelocityX;
+        deltaX *= shipVelocityX * elapsedS;
+
+        if (Math.abs(deltaX) > maxVelocityX * elapsedS){
+           // deltaX = Math.signum(deltaX) * maxVelocityX * elapsedS;
+        }
+
+        getPosition().X += deltaX;
 
         getPosition().X = Math.min(1 - widthRatio / 2 , getPosition().X + widthRatio / 2);
         getPosition().X = Math.max(0 + widthRatio / 2, getPosition().X - widthRatio / 2);

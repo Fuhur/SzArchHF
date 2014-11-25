@@ -44,7 +44,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             float deltaX = Math.abs(mLastX - x);
             float deltaY = Math.abs(mLastY - y);
             float deltaZ = Math.abs(mLastZ - z);
-            if (deltaX < NOISE) deltaX = (float)0.0;
+            if (deltaX > NOISE) mLastY++;
             if (deltaY < NOISE) deltaY = (float)0.0;
             if (deltaZ < NOISE) deltaZ = (float)0.0;
 
@@ -189,6 +189,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             canvas.drawText(Double.toString(elapsed),100,100,paint);
             canvas.drawText(Double.toString(spaceShip.getPosition().Y),100,120,paint);
             canvas.drawText(Double.toString(spaceShip.getVelocity()),100,140,paint);
+            canvas.drawText(Double.toString(mLastX),100,160,paint);
             backgroundSpace.drawStars(canvas, paint);
             foregroundSpace.DrawEverything(canvas,paint,spaceShip.getPosition().Y - 0.1f);
             if (opponentPresent){
