@@ -1,6 +1,8 @@
 package archhazi.spaceshooter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,17 +31,17 @@ public class SettingsActivity extends Activity {
         EditText nameText = (EditText) findViewById(R.id.name_input);
         String name = nameText.getText().toString();
 
-        try {
-            FileOutputStream fileout=openFileOutput(MainMenuActivity.FILE_NAME, MODE_PRIVATE);
-            OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
-            outputWriter.write(name);
-            outputWriter.close();
+        SharedPreferences settings = getSharedPreferences(MainMenuActivity.USER_INFO, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(MainMenuActivity.PLAYER_NAME_KEY,name);
+        editor.commit();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Intent intent = new Intent();
+        intent.putExtra(MainMenuActivity.NAME_SETTING_KEY, name);
+        setResult(RESULT_OK, intent);
+        finish();
 
-        
+        finish();
     }
 
     @Override

@@ -2,6 +2,7 @@ package archhazi.spaceshooter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,9 +17,12 @@ public class MainMenuActivity extends Activity {
     public final static String SEED_KEY = "SEED_KEY";
     public final static String LENGTH_KEY = "LENGTH_KEY";
     public final static String MULTIPLAYER_KEY = "MULTIPLAYER_KEY";
+    public static final String PLAYER_NAME_KEY = "PLAYER_NAME_KEY";
+    public static final String NAME_SETTING_KEY = "NAME_SETTING_KEY";
 
-    public final static String FILE_NAME = "settings.txt";
-    public static String PLAYER_NAME;
+    public final static String USER_INFO = "UserInfo";
+
+    private String PLAYER_NAME;
     private static boolean NAME_SET = false;
 
     public void startSinglePlayerGame(View view){
@@ -37,40 +41,30 @@ public class MainMenuActivity extends Activity {
         // TO DO
         // HANDSHAKING
         intent.putExtra(SEED_KEY,0);
-        intent.putExtra(LENGTH_KEY,30f);
+        intent.putExtra(LENGTH_KEY,5f);
         intent.putExtra(MULTIPLAYER_KEY,true);
 
         startActivity(intent);
     }
 
-    private boolean loadName(){
-        String s="";
-        try {
-            FileInputStream fileIn=openFileInput(FILE_NAME);
-            InputStreamReader InputRead= new InputStreamReader(fileIn);
+    private void loadName(){
 
-            char[] inputBuffer= new char[100];
+        SharedPreferences settings = getSharedPreferences(USER_INFO, 0);
+        String name = settings.getString(PLAYER_NAME_KEY, "").toString();
 
-            int charRead;
-
-            while ((charRead=InputRead.read(inputBuffer))>0) {
-                // char to string conversion
-                String readstring=String.copyValueOf(inputBuffer,0,charRead);
-                s +=readstring;
-            }
-            InputRead.close();
-        } catch (Exception e) {
-            return false;
+        if (!name.equals("")){
+            setName(name);
         }
 
-        setName(s);
-
-        return true;
     }
 
     public void setName(String name){
         PLAYER_NAME = name;
         NAME_SET = true;
+
+        findViewById(R.id.practiceButton).setClickable(true);
+        findViewById(R.id.multiButton).setClickable(true);
+        findViewById(R.id.nameWarningText).setVisibility(View.INVISIBLE);
     }
 
 
@@ -79,6 +73,10 @@ public class MainMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        findViewById(R.id.practiceButton).setClickable(false);
+        findViewById(R.id.multiButton).setClickable(false);
+
+        loadName();
         // Try and load the name
     }
 
@@ -89,6 +87,22 @@ public class MainMenuActivity extends Activity {
         return true;
     }
 
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        if (resultCode == 0){
+            return;
+        }
+
+        // Collect data from the intent and use it
+        String nameSet = data.getStringExtra(NAME_SETTING_KEY);
+
+        if (nameSet.equals("")){
+            return;
+        }
+
+        setName(nameSet);
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -97,7 +111,7 @@ public class MainMenuActivity extends Activity {
         int id = item.getItemId();
 
         Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,0);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
