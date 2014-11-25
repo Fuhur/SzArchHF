@@ -160,10 +160,11 @@ public class GameActivity extends Activity implements SensorEventListener {
                         backgroundSpace.setTopLayerVelocity(spaceShip.getVelocity());
                         break;
                     case ASTEROID:
-                        viewHandler.removeCallbacks(updateView);
-                        gameEnded = true;
-                        finish();
-                        return;
+                        spaceShip.collided();
+                     //   viewHandler.removeCallbacks(updateView);
+                     //   gameEnded = true;
+                     //   finish();
+                        break;
                     case NO_COLLISION:
 
                         break;

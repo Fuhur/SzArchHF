@@ -29,6 +29,10 @@ public class CollisionDetector {
 
     public static boolean collisionSpeedBonus(SpaceShip ship, List<SpeedBonus> speedBonuses){
 
+        if (ship.isInvincible()){
+            return false;
+        }
+
         MyVector front = ship.getFront();
         MyVector left = ship.getLeft();
         MyVector right = ship.getRight();
@@ -63,6 +67,11 @@ public class CollisionDetector {
     }
 
     public static boolean collisionAsteroid(SpaceShip ship, List<Asteroid> asteroids){
+
+        if (ship.isInvincible()){
+            return false;
+        }
+
         MyVector front = ship.getFront();
         MyVector left = ship.getLeft();
         MyVector right = ship.getRight();
