@@ -125,10 +125,17 @@ public class GameActivity extends Activity implements SensorEventListener {
                 paint.setStyle(Paint.Style.FILL);
                 paint.setColor(Color.BLACK);
                 canvas.drawPaint(paint);
-                // Use Color.parseColor to define HTML colors
-                paint.setColor(Color.parseColor("#CD5C5C"));
-                canvas.drawText(Long.toString(startTime - System.currentTimeMillis()),100,100,paint);
+
+                paint.setColor(getResources().getColor(R.color.green));
+                paint.setTextSize(300);
+                paint.setTextAlign(Paint.Align.CENTER);
+
+                int xPos = (canvas.getWidth() / 2);
+                int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)) ;
+                canvas.drawText(Integer.toString((int)((startTime - System.currentTimeMillis()) / 1000.f) + 1), xPos, yPos, paint);
+
                 view.invalidate();
+
                 return;
             }
 
@@ -207,12 +214,17 @@ public class GameActivity extends Activity implements SensorEventListener {
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.BLACK);
             canvas.drawPaint(paint);
-            // Use Color.parseColor to define HTML colors
+
+            // To remove
             paint.setColor(Color.parseColor("#CD5C5C"));
+            paint.setTextSize(12);
+            paint.setTextAlign(Paint.Align.LEFT);
+
             canvas.drawText(Double.toString(elapsed),100,100,paint);
             canvas.drawText(Double.toString(spaceShip.getPosition().Y),100,120,paint);
             canvas.drawText(Double.toString(spaceShip.getVelocity()),100,140,paint);
             canvas.drawText(Double.toString(mLastX),100,160,paint);
+
             backgroundSpace.drawStars(canvas, paint);
             foregroundSpace.DrawEverything(canvas,paint,spaceShip.getPosition().Y - (1 - Utility.playerPosOnScreenY));
             if (opponentPresent){
