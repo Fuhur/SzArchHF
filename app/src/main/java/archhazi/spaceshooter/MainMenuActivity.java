@@ -12,6 +12,7 @@ import android.view.View;
 public class MainMenuActivity extends Activity {
 
     public final static String SEED_KEY = "SEED_KEY";
+    public final static String START_TIME_KEY = "START_TIME_KEY";
     public final static String LENGTH_KEY = "LENGTH_KEY";
     public final static String MULTIPLAYER_KEY = "MULTIPLAYER_KEY";
     public static final String PLAYER_NAME_KEY = "PLAYER_NAME_KEY";

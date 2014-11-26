@@ -19,9 +19,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import archhazi.spaceshooter.Communication.ServerProxy;
 
@@ -77,8 +74,7 @@ public class LobbyActivity extends Activity {
                         }
                     }
 
-                    if (response == null)
-                    {
+                    if (response == null) {
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 waitingText.setText("Couldn't connect.");
@@ -92,40 +88,22 @@ public class LobbyActivity extends Activity {
                         final int seed = (Integer) response.get("LevelSeed");
                         final long startTimeStamp = (Long) response.get("StartTimeStamp") - serverProxy.getDelay();
 
-                        while (startTimeStamp > System.currentTimeMillis() + 100) {
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    waitingText.setText("Seed = " + seed + ", start in " + (startTimeStamp - System.currentTimeMillis()) + " ms");
-                                }
-                            });
-                            Thread.sleep(100, 0);
-                        }
-                        if (startTimeStamp > System.currentTimeMillis()) {
-                            Thread.sleep(startTimeStamp - System.currentTimeMillis(), 0);
-                        }
+
 
                         Intent intent = new Intent(LobbyActivity.this, GameActivity.class);
 
                         intent.putExtra(MainMenuActivity.SEED_KEY, seed);
                         intent.putExtra(MainMenuActivity.LENGTH_KEY, GameActivity.MULTI_LENGTH);
+                        intent.putExtra(MainMenuActivity.START_TIME_KEY, startTimeStamp);
                         intent.putExtra(MainMenuActivity.MULTIPLAYER_KEY, true);
 
                         startActivity(intent);
                     } catch (JSONException e) {
                         Log.d(TAG, e.getMessage());
-                    } catch (InterruptedException e) {
-                        Log.d(TAG, e.getMessage());
                     }
                 }
             };
             thread.start();
-
-            final ScheduledExecutorService scheduleTaskExecutor = Executors.newSingleThreadScheduledExecutor();
-            scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
-                public void run() {
-
-                }
-            }, 0, 500, TimeUnit.MILLISECONDS);
         }
     }
 }

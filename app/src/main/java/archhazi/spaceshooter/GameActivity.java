@@ -44,6 +44,7 @@ public class GameActivity extends Activity implements SensorEventListener {
     public final static String TAG = "GameActivity";
 
     private String deviceId;
+    private long startTime = -1;
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -105,20 +106,29 @@ public class GameActivity extends Activity implements SensorEventListener {
         private boolean opponentPresent = false;
         private SpaceShip opponent = null;
 
-        private Paint paint = null;
+        private Paint paint = new Paint();
 
         private boolean gameEnded = false;
 
         private int seed;
         private float trackLength;
 
-        private long startTime = -1;
-
         private ServerProxy serverProxy = new ServerProxy();
 
         @Override
         protected void onDraw(Canvas canvas) {
-            if (gameEnded){
+            if (gameEnded) {
+                return;
+            }
+
+            if (startTime > System.currentTimeMillis()) {
+                paint.setStyle(Paint.Style.FILL);
+                paint.setColor(Color.BLACK);
+                canvas.drawPaint(paint);
+                // Use Color.parseColor to define HTML colors
+                paint.setColor(Color.parseColor("#CD5C5C"));
+                canvas.drawText(Long.toString(startTime - System.currentTimeMillis()),100,100,paint);
+                view.invalidate();
                 return;
             }
 
@@ -193,11 +203,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 
             // TODO Auto-generated method stub
             super.onDraw(canvas);
-
-            if (paint == null)
-            {
-                paint = new Paint();
-            }
 
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.BLACK);
@@ -285,7 +290,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         Intent intent = getIntent();
         int seed = intent.getIntExtra(MainMenuActivity.SEED_KEY, -1);
-        float length = intent.getFloatExtra(MainMenuActivity.LENGTH_KEY,1);
+        float length = intent.getFloatExtra(MainMenuActivity.LENGTH_KEY, 1);
+        startTime = intent.getLongExtra(MainMenuActivity.START_TIME_KEY, System.currentTimeMillis() + 3000);
         boolean multiplayer = intent.getBooleanExtra(MainMenuActivity.MULTIPLAYER_KEY,false);
 
         gameView.setSeed(seed);
