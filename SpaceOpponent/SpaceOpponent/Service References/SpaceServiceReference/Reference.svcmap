@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ea0fbfa7-1c1d-4cb7-83e1-b4eefee0aba0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SpaceService.wsdl" MetadataType="Wsdl" ID="21901702-1ab9-4b8b-8e31-f7c85caae30b" SourceId="1" SourceUrl="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="SpaceService.xsd" MetadataType="Schema" ID="d588d075-b45b-41e0-ae17-2fe5b6d99f95" SourceId="1" SourceUrl="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd4" />
+    <MetadataFile FileName="SpaceService1.xsd" MetadataType="Schema" ID="be05219a-3b5b-4d76-abbd-b4eeb56620ed" SourceId="1" SourceUrl="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd3" />
+    <MetadataFile FileName="SpaceService2.xsd" MetadataType="Schema" ID="5ad7d555-775d-49ef-8a0f-af00698df0bb" SourceId="1" SourceUrl="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SpaceService3.xsd" MetadataType="Schema" ID="320219b7-cdc8-4b2b-b585-6e2ffc0493ab" SourceId="1" SourceUrl="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SpaceService.disco" MetadataType="Disco" ID="d18d6333-6b2e-4840-84b9-36f82565911e" SourceId="1" SourceUrl="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?disco" />
+    <MetadataFile FileName="SpaceService1.wsdl" MetadataType="Wsdl" ID="ab5a8851-7922-46bb-8fa1-c623a94ab72f" SourceId="1" SourceUrl="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?wsdl" />
+    <MetadataFile FileName="SpaceService4.xsd" MetadataType="Schema" ID="bc54826a-9c51-476b-8013-e33d0f8ac27f" SourceId="1" SourceUrl="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

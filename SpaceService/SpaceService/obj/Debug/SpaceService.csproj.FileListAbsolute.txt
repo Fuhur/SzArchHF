@@ -1,0 +1,9 @@
+C:\Users\Novák Gergely\Documents\SpaceService\SpaceService\bin\SpaceService.dll.config
+C:\Users\Novák Gergely\Documents\SpaceService\SpaceService\bin\SpaceService.dll
+C:\Users\Novák Gergely\Documents\SpaceService\SpaceService\bin\SpaceService.pdb
+C:\Users\Novák Gergely\Documents\SpaceService\SpaceService\obj\Debug\SpaceService.dll
+C:\Users\Novák Gergely\Documents\SpaceService\SpaceService\obj\Debug\SpaceService.pdb
+C:\Users\Novák Gergely\Documents\SpaceService\SpaceService\bin\EntityFramework.dll
+C:\Users\Novák Gergely\Documents\SpaceService\SpaceService\bin\EntityFramework.SqlServer.dll
+C:\Users\Novák Gergely\Documents\SpaceService\SpaceService\bin\EntityFramework.xml
+C:\Users\Novák Gergely\Documents\SpaceService\SpaceService\bin\EntityFramework.SqlServer.xml

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://schemas.microsoft.com/ws/2005/02/mex/bindings" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SpaceService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="http://schemas.microsoft.com/ws/2005/02/mex/bindings" location="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?wsdl=wsdl0" />
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO" />
+      <xsd:import schemaLocation="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/SpaceService.Model" />
+      <xsd:import schemaLocation="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISpaceService_SetName_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetName" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_SetName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_UploadHighScore_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadHighScore" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_UploadHighScore_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadHighScoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_StartMultiplayer_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartMultiplayer" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_StartMultiplayer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartMultiplayerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Tick_InputMessage">
+    <wsdl:part name="parameters" element="tns:Tick" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Tick_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TickResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Delay_InputMessage">
+    <wsdl:part name="parameters" element="tns:Delay" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Delay_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DelayResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Finish_InputMessage">
+    <wsdl:part name="parameters" element="tns:Finish" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Finish_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FinishResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Result_InputMessage">
+    <wsdl:part name="parameters" element="tns:Result" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Result_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Lobby_InputMessage">
+    <wsdl:part name="parameters" element="tns:Lobby" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Lobby_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LobbyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Matches_InputMessage">
+    <wsdl:part name="parameters" element="tns:Matches" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Matches_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MatchesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Reset_InputMessage">
+    <wsdl:part name="parameters" element="tns:Reset" />
+  </wsdl:message>
+  <wsdl:message name="ISpaceService_Reset_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ResetResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ISpaceService">
+    <wsdl:operation name="SetName">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISpaceService/SetName" message="tns:ISpaceService_SetName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISpaceService/SetNameResponse" message="tns:ISpaceService_SetName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadHighScore">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISpaceService/UploadHighScore" message="tns:ISpaceService_UploadHighScore_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISpaceService/UploadHighScoreResponse" message="tns:ISpaceService_UploadHighScore_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartMultiplayer">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISpaceService/StartMultiplayer" message="tns:ISpaceService_StartMultiplayer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISpaceService/StartMultiplayerResponse" message="tns:ISpaceService_StartMultiplayer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Tick">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISpaceService/Tick" message="tns:ISpaceService_Tick_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISpaceService/TickResponse" message="tns:ISpaceService_Tick_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Delay">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISpaceService/Delay" message="tns:ISpaceService_Delay_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISpaceService/DelayResponse" message="tns:ISpaceService_Delay_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Finish">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISpaceService/Finish" message="tns:ISpaceService_Finish_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISpaceService/FinishResponse" message="tns:ISpaceService_Finish_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Result">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISpaceService/Result" message="tns:ISpaceService_Result_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISpaceService/ResultResponse" message="tns:ISpaceService_Result_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Lobby">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISpaceService/Lobby" message="tns:ISpaceService_Lobby_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISpaceService/LobbyResponse" message="tns:ISpaceService_Lobby_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Matches">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISpaceService/Matches" message="tns:ISpaceService_Matches_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISpaceService/MatchesResponse" message="tns:ISpaceService_Matches_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Reset">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISpaceService/Reset" message="tns:ISpaceService_Reset_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISpaceService/ResetResponse" message="tns:ISpaceService_Reset_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:service name="SpaceService">
+    <wsdl:port name="MetadataExchangeHttpBinding_ISpaceService" binding="i0:MetadataExchangeHttpBinding_ISpaceService">
+      <soap12:address location="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc/mex" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc/mex</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
