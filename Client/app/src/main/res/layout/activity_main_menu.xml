@@ -20,6 +20,11 @@
         android:id="@+id/multiButton"
         android:text="Multiplayer"
         android:onClick="startMultiPlayerGame"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High Scores"
+        android:onClick="highScores"/>
 
     <TextView
         android:text="You have to set your name first in the settings!"

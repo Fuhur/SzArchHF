@@ -34,7 +34,7 @@ namespace SpaceService
             db.SaveChanges();
         }
 
-        public void UploadHighScore(string deviceId, float score)
+        public void UploadHighScore(string deviceId, int score)
         {
             if (deviceId == null || score == 0)
             {
@@ -48,6 +48,15 @@ namespace SpaceService
             }
 
             db.SaveChanges();
+        }
+
+        public List<HighScoreDTO> HighScores()
+        {
+            return db.Players.Where(p => p.HighScore.HasValue).OrderBy(p => p.HighScore).Take(10).Select(p => new HighScoreDTO
+            {
+                Name = p.Name,
+                Score = p.HighScore.Value
+            }).ToList();
         }
 
         public StartMultiplayerResponse StartMultiplayer(string deviceId)
@@ -149,7 +158,7 @@ namespace SpaceService
             return response;
         }
 
-        public void Finish(string deviceId, float score)
+        public void Finish(string deviceId, int score)
         {
             var match = matches.FirstOrDefault(m => m.PlayerStates.Any(ps => ps.Player.DeviceId == deviceId));
             if (match == null)
@@ -227,6 +236,5 @@ namespace SpaceService
             lobby.Clear();
             matches.Clear();
         }
-
     }
 }

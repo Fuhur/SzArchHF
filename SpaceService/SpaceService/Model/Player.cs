@@ -16,7 +16,7 @@ namespace SpaceService.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<double> HighScore { get; set; }
+        public Nullable<int> HighScore { get; set; }
         public string DeviceId { get; set; }
     }
 }

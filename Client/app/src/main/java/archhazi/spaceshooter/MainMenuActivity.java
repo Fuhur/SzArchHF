@@ -23,7 +23,7 @@ public class MainMenuActivity extends Activity {
     private String PLAYER_NAME;
     private static boolean NAME_SET = false;
 
-    public void startSinglePlayerGame(View view){
+    public void startSinglePlayerGame(View view) {
         Intent intent = new Intent(this, GameActivity.class);
 
         intent.putExtra(SEED_KEY, 0);
@@ -33,9 +33,12 @@ public class MainMenuActivity extends Activity {
         startActivity(intent);
     }
 
-    public void startMultiPlayerGame(View view){
-        Intent intent = new Intent(this, LobbyActivity.class);
-        startActivity(intent);
+    public void startMultiPlayerGame(View view) {
+        startActivity(new Intent(this, LobbyActivity.class));
+    }
+
+    public void highScores(View view) {
+        startActivity(new Intent(this, HighScoresActivity.class));
     }
 
     private void loadName(){

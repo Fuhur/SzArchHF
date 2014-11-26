@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -76,6 +77,21 @@ public class ServerProxy {
             Log.d(TAG, "Message: " + message);
 
             return httpClient.execute(httpPost);
+        } catch (IOException e) {
+            Log.d(TAG, "Init server connection failed: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public HttpResponse getFromServer(String method) {
+        String response = null;
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+
+            String serverAddress = SERVER_BASE + method;
+            HttpGet httpGet = new HttpGet(serverAddress);
+
+            return httpClient.execute(httpGet);
         } catch (IOException e) {
             Log.d(TAG, "Init server connection failed: " + e.getMessage());
         }
