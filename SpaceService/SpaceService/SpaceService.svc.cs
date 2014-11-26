@@ -121,6 +121,11 @@ namespace SpaceService
             }
         }
 
+        public void QuitLobby(string deviceId)
+        {
+            lobby.Remove(deviceId);
+        }
+
         private long TimeInMillis()
         {
             return (long)(DateTime.UtcNow - origin).TotalMilliseconds;

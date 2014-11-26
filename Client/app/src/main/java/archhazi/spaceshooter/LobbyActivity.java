@@ -57,7 +57,8 @@ public class LobbyActivity extends Activity {
                     boolean ready = false;
                     JSONObject response = null;
 
-                    while (!ready) {
+                    // Only run for a minute
+                    for (int i = 0; i < 120 && !ready; i++) {
                         try {
                             HttpResponse httpResponse = serverProxy.sendMessageToServer(deviceId, "StartMultiplayer");
                             String entity = EntityUtils.toString(httpResponse.getEntity());
@@ -74,10 +75,11 @@ public class LobbyActivity extends Activity {
                         }
                     }
 
-                    if (response == null) {
+                    if (!ready || response == null) {
+                        serverProxy.sendMessageToServer(deviceId, "QuitLobby");
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                waitingText.setText("Couldn't connect.");
+                                waitingText.setText("Couldn't find opponent.");
                                 progressBar.setVisibility(View.INVISIBLE);
                             }
                         });
@@ -87,8 +89,6 @@ public class LobbyActivity extends Activity {
                     try {
                         final int seed = (Integer) response.get("LevelSeed");
                         final long startTimeStamp = (Long) response.get("StartTimeStamp") - serverProxy.getDelay();
-
-
 
                         Intent intent = new Intent(LobbyActivity.this, GameActivity.class);
 

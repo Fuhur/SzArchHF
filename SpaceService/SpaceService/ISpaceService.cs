@@ -30,6 +30,10 @@ namespace SpaceService
         StartMultiplayerResponse StartMultiplayer(string deviceId);
 
         [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        void QuitLobby(string deviceId);
+
+        [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         TickResponse Tick(string deviceId, float X, float Y);
 
