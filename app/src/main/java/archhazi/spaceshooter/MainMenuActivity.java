@@ -8,9 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-
 
 public class MainMenuActivity extends Activity {
 
@@ -28,9 +25,9 @@ public class MainMenuActivity extends Activity {
     public void startSinglePlayerGame(View view){
         Intent intent = new Intent(this, GameActivity.class);
 
-        intent.putExtra(SEED_KEY,0);
-        intent.putExtra(LENGTH_KEY,35f);
-        intent.putExtra(MULTIPLAYER_KEY,false);
+        intent.putExtra(SEED_KEY, 0);
+        intent.putExtra(LENGTH_KEY, GameActivity.PRACTICE_LENGTH);
+        intent.putExtra(MULTIPLAYER_KEY, false);
 
         startActivity(intent);
     }

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="archhazi.spaceshooter" >
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
-
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -34,7 +37,23 @@
             android:name="archhazi.spaceshooter.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name="archhazi.spaceshooter.LobbyActivity"
+            android:label="@string/title_activity_lobby"
+            android:noHistory="true"
+            android:parentActivityName="archhazi.spaceshooter.MainMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="archhazi.spaceshooter.MainMenuActivity" />
+        </activity>
+        <activity
+            android:name="archhazi.spaceshooter.HighScoresActivity"
+            android:label="@string/title_activity_high_scores"
+            android:parentActivityName="archhazi.spaceshooter.MainMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="archhazi.spaceshooter.MainMenuActivity" />
+        </activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
 </manifest>

@@ -85,7 +85,7 @@ public class SpaceShip{
 
     public void drawShipAsOpponent(Canvas canvas, Paint paint, float minY){
         if (position.Y < minY + 1 && position.Y >= minY){
-            drawShip(canvas,paint,true);
+            drawShip(canvas, paint, true);
         }
     }
 
@@ -103,7 +103,6 @@ public class SpaceShip{
             }
 
         }
-
 
         Path path = new Path();
         path.moveTo(Utility.RatioXToPX((getPosition().X + widthRatio / 2)),

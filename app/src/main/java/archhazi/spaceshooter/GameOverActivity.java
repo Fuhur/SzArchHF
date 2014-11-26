@@ -9,16 +9,16 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 import archhazi.spaceshooter.Communication.ServerProxy;
 
@@ -30,6 +30,7 @@ public class GameOverActivity extends Activity {
     private TextView scoreText;
     private Button sendButton;
 
+    private TextView gameOverText;
     private TextView resultText;
 
     private static final String TAG = "GameOverActivity";
@@ -43,19 +44,21 @@ public class GameOverActivity extends Activity {
 
         Intent intent = getIntent();
 
-        float score = intent.getIntExtra(GameActivity.SCORE_KEY,0);
+        float score = intent.getIntExtra(GameActivity.SCORE_KEY, 0);
         scoreText = (TextView) findViewById(R.id.game_score);
         scoreText.setText(Float.toString(score));
 
-        boolean multiplayer = intent.getBooleanExtra(MainMenuActivity.MULTIPLAYER_KEY,false);
+        boolean multiplayer = intent.getBooleanExtra(MainMenuActivity.MULTIPLAYER_KEY, false);
 
         sendButton = (Button) findViewById(R.id.sendScore_button);
+        gameOverText = (TextView) findViewById(R.id.game_over);
         resultText = (TextView) findViewById(R.id.result_text);
 
-        if (!multiplayer){
+        if (multiplayer) {
             sendButton.setVisibility(View.INVISIBLE);
-            resultText.setVisibility(View.INVISIBLE);
+            finishMultiplayer();
         } else {
+            gameOverText.setText("Game over");
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if (networkInfo == null || !networkInfo.isConnected()) {
@@ -65,14 +68,54 @@ public class GameOverActivity extends Activity {
         }
     }
 
-    public void sendScore(View view){
+    private void finishMultiplayer() {
+        final Float score = Float.parseFloat(scoreText.getText().toString());
+        final String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
+        new Thread() {
+            public void run() {
+                try {
+                    JSONObject request = new JSONObject();
+                    request.put("deviceId", deviceId);
+                    request.put("score", score);
+
+                    HttpResponse response = serverProxy.sendMessageToServer(request.toString(), "Finish");
+
+                    Thread.sleep(100, 0);
+
+                    response = serverProxy.sendMessageToServer(deviceId, "Result");
+                    String entity = EntityUtils.toString(response.getEntity()).trim();
+                    final String result = entity.replace("\"", "");
+
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            gameOverText.setText(result);
+                            if (result == "Victory") {
+                                gameOverText.setTextColor(getResources().getColor(R.color.green));
+                            } else {
+                                gameOverText.setTextColor(getResources().getColor(R.color.red));
+                            }
+                        }
+                    });
+                } catch (JSONException e) {
+                    Log.d(TAG, e.getMessage());
+                } catch (InterruptedException e) {
+                    Log.d(TAG, e.getMessage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    public void sendScore(View view) {
         SharedPreferences settings = getSharedPreferences(MainMenuActivity.USER_INFO, 0);
+        final String name = settings.getString(MainMenuActivity.PLAYER_NAME_KEY, "Player").toString();
+        serverProxy.saveName(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID), name);
 
-        final String name = settings.getString(MainMenuActivity.PLAYER_NAME_KEY, "").toString();
         final Float score = Float.parseFloat(scoreText.getText().toString());
 
-        Thread uploadThread = new Thread() {
+        new Thread() {
             public void run() {
                 JSONObject request = new JSONObject();
                 try {
@@ -93,29 +136,6 @@ public class GameOverActivity extends Activity {
                     }
                 });
             }
-        };
-        uploadThread.start();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_end_of_track, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        }.start();
     }
 }

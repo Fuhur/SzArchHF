@@ -8,6 +8,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -21,6 +24,39 @@ public class ServerProxy {
     private static final String TAG = "ServerProxy";
 
     private String androidId;
+    private long delay;
+
+    public void saveName(final String deviceId, final String name) {
+        new Thread() {
+            public void run() {
+                JSONObject request = new JSONObject();
+                try {
+                    request.put("deviceId", deviceId);
+                    request.put("name", name);
+                } catch (JSONException e) {
+                    Log.d(TAG, e.getMessage());
+                }
+                sendMessageToServer(request.toString(), "SetName");
+            }
+        }.start();
+    }
+
+    public void calculateDelay() {
+        new Thread() {
+            public void run() {
+                HttpResponse response = sendMessageToServer("" + System.currentTimeMillis(), "Delay");
+                if (response != null) {
+                    try {
+                        String entity = EntityUtils.toString(response.getEntity());
+                        delay = Long.parseLong(entity);
+                        Log.d(TAG, "Delay: " + delay + " ms");
+                    } catch (IOException e) {
+                        Log.d(TAG, e.getMessage());
+                    }
+                }
+            }
+        }.start();
+    }
 
     public HttpResponse sendMessageToServer(String message, String method) {
         String response = null;
@@ -48,5 +84,9 @@ public class ServerProxy {
 
     public void setAndroidId(String androidId) {
         this.androidId = androidId;
+    }
+
+    public long getDelay() {
+        return delay;
     }
 }

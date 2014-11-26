@@ -10,9 +10,9 @@
     tools:context="archhazi.spaceshooter.GameOverActivity">
 
     <TextView
+        android:id="@+id/game_over"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Game Over"
         android:textColor="@color/black"
         android:textSize="24dp"
         android:textStyle="bold" />
@@ -51,6 +51,8 @@
     <Button
         android:id="@+id/sendScore_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/send"
+        android:onClick="sendScore"/>
 
 </LinearLayout>

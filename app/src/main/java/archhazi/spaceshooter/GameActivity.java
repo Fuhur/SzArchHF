@@ -12,6 +12,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 
 import org.apache.http.HttpResponse;
@@ -37,6 +39,11 @@ public class GameActivity extends Activity implements SensorEventListener {
     private Sensor mAccelerometer;
 
     public final static String SCORE_KEY = "SCORE_KEY";
+    public final static float PRACTICE_LENGTH = 10.f;
+    public final static float MULTI_LENGTH = 5.f;
+    public final static String TAG = "GameActivity";
+
+    private String deviceId;
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -155,10 +162,10 @@ public class GameActivity extends Activity implements SensorEventListener {
 
                         Intent intent = new Intent(getContext(),GameOverActivity.class);
 
-                        long gameLengthMS = actTime-startTime;
+                        long gameLengthMS = actTime - startTime;
 
-                        intent.putExtra(SCORE_KEY,(int)gameLengthMS);
-                        intent.putExtra(MainMenuActivity.MULTIPLAYER_KEY,opponentPresent);
+                        intent.putExtra(SCORE_KEY, (int)gameLengthMS);
+                        intent.putExtra(MainMenuActivity.MULTIPLAYER_KEY, opponentPresent);
 
                         startActivity(intent);
 
@@ -212,27 +219,34 @@ public class GameActivity extends Activity implements SensorEventListener {
 
             view.invalidate();
 
-            Thread uploadThread = new Thread() {
-                public void run() {
-                    JSONObject request = new JSONObject();
-                    try {
-                        request.put("X", spaceShip.getPosition().X);
-                        request.put("Y", spaceShip.getPosition().Y);
+            if (opponentPresent){
+                new Thread() {
+                    public void run() {
+                        JSONObject request = new JSONObject();
+                        try {
+                            request.put("deviceId", deviceId);
+                            request.put("X", spaceShip.getPosition().X);
+                            request.put("Y", spaceShip.getPosition().Y);
 
-                        final HttpResponse response = serverProxy.sendMessageToServer(request.toString(), "Tick");
-                        String entity = EntityUtils.toString(response.getEntity());
-                        JSONObject json = new JSONObject(entity);
+                            final HttpResponse response = serverProxy.sendMessageToServer(request.toString(), "Tick");
+                            if (response != null)
+                            {
+                                String entity = EntityUtils.toString(response.getEntity());
+                                JSONObject json = new JSONObject(entity);
 
-                        JSONObject opponentPosition = json.getJSONObject("OpponentPosition");
-                        float opponentX = (float) opponentPosition.getDouble("X");
-                        float opponentY = (float) opponentPosition.getDouble("Y");
-                        opponent.setPosition(new MyVector(opponentX, opponentY));
-                    } catch (JSONException e) {
-                    } catch (IOException e) {
+                                JSONObject opponentPosition = json.getJSONObject("OpponentPosition");
+                                float opponentX = (float) opponentPosition.getDouble("X");
+                                float opponentY = (float) opponentPosition.getDouble("Y");
+                                opponent.setPosition(new MyVector(opponentX, opponentY));
+                            }
+                        } catch (JSONException e) {
+                            Log.d(TAG, e.getMessage());
+                        } catch (IOException e) {
+                            Log.d(TAG, e.getMessage());
+                        }
                     }
-                }
-            };
-            uploadThread.start();
+                }.start();
+            }
         }
 
         public void setSeed(int seed){
@@ -282,6 +296,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+
+        deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
 

@@ -3,6 +3,7 @@ package archhazi.spaceshooter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -27,12 +28,11 @@ import archhazi.spaceshooter.Communication.ServerProxy;
 
 public class LobbyActivity extends Activity {
 
+    private static final String TAG = "LobbyActivity";
     private TextView waitingText;
     private ProgressBar progressBar;
 
     private ServerProxy serverProxy = new ServerProxy();
-
-    private static final String TAG = "LobbyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,41 +50,80 @@ public class LobbyActivity extends Activity {
         } else {
             final String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
-            final ScheduledExecutorService scheduleTaskExecutor = Executors.newSingleThreadScheduledExecutor();
-            scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
+            SharedPreferences settings = getSharedPreferences(MainMenuActivity.USER_INFO, 0);
+            serverProxy.saveName(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID), settings.getString(MainMenuActivity.PLAYER_NAME_KEY, "Player"));
+
+            serverProxy.calculateDelay();
+
+            Thread thread = new Thread() {
                 public void run() {
-                    final HttpResponse response = serverProxy.sendMessageToServer(deviceId, "StartMultiplayer");
+                    boolean ready = false;
+                    JSONObject response = null;
+
+                    while (!ready) {
+                        try {
+                            HttpResponse httpResponse = serverProxy.sendMessageToServer(deviceId, "StartMultiplayer");
+                            String entity = EntityUtils.toString(httpResponse.getEntity());
+                            response = new JSONObject(entity);
+                            ready = (Boolean) response.get("Ready");
+
+                            Thread.sleep(500, 0);
+                        } catch (IOException e) {
+                            Log.d(TAG, e.getMessage());
+                        } catch (JSONException e) {
+                            Log.d(TAG, e.getMessage());
+                        } catch (InterruptedException e) {
+                            Log.d(TAG, e.getMessage());
+                        }
+                    }
+
+                    if (response == null)
+                    {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                waitingText.setText("Couldn't connect.");
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                        return;
+                    }
+
                     try {
-                        String entity = EntityUtils.toString(response.getEntity());
-                        JSONObject request = new JSONObject(entity);
-                        boolean ready = (Boolean) request.get("Ready");
-                        final int seed = (Integer) request.get("LevelSeed");
-                        final long startTimeStamp = (Long) request.get("StartTimeStamp");
-                        if (ready) {
+                        final int seed = (Integer) response.get("LevelSeed");
+                        final long startTimeStamp = (Long) response.get("StartTimeStamp") - serverProxy.getDelay();
+
+                        while (startTimeStamp > System.currentTimeMillis() + 100) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     waitingText.setText("Seed = " + seed + ", start in " + (startTimeStamp - System.currentTimeMillis()) + " ms");
                                 }
                             });
-                            scheduleTaskExecutor.shutdown();
-                            try {
-                                Thread.sleep((startTimeStamp - System.currentTimeMillis()), 0);
-                            } catch (InterruptedException e) {
-                            }
-
-                            Intent intent = new Intent(LobbyActivity.this, GameActivity.class);
-
-                            intent.putExtra(MainMenuActivity.SEED_KEY, seed);
-                            intent.putExtra(MainMenuActivity.LENGTH_KEY, 5f);
-                            intent.putExtra(MainMenuActivity.MULTIPLAYER_KEY, true);
-
-                            startActivity(intent);
+                            Thread.sleep(100, 0);
                         }
-                    } catch (IOException e) {
-                        Log.d(TAG, e.getMessage());
+                        if (startTimeStamp > System.currentTimeMillis()) {
+                            Thread.sleep(startTimeStamp - System.currentTimeMillis(), 0);
+                        }
+
+                        Intent intent = new Intent(LobbyActivity.this, GameActivity.class);
+
+                        intent.putExtra(MainMenuActivity.SEED_KEY, seed);
+                        intent.putExtra(MainMenuActivity.LENGTH_KEY, GameActivity.MULTI_LENGTH);
+                        intent.putExtra(MainMenuActivity.MULTIPLAYER_KEY, true);
+
+                        startActivity(intent);
                     } catch (JSONException e) {
                         Log.d(TAG, e.getMessage());
+                    } catch (InterruptedException e) {
+                        Log.d(TAG, e.getMessage());
                     }
+                }
+            };
+            thread.start();
+
+            final ScheduledExecutorService scheduleTaskExecutor = Executors.newSingleThreadScheduledExecutor();
+            scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
+                public void run() {
+
                 }
             }, 0, 500, TimeUnit.MILLISECONDS);
         }

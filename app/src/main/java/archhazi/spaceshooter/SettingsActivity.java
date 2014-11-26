@@ -4,20 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
+import archhazi.spaceshooter.Communication.ServerProxy;
 
 
 public class SettingsActivity extends Activity {
 
+    private ServerProxy serverProxy = new ServerProxy();
 
+    private SharedPreferences settings;
+    private EditText nameText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +24,22 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.activity_settings);
 
         getActionBar().hide();
+
+        settings = getSharedPreferences(MainMenuActivity.USER_INFO, 0);
+        nameText = (EditText) findViewById(R.id.name_input);
+
+        String name = settings.getString(MainMenuActivity.PLAYER_NAME_KEY, "Player");
+        nameText.setText(name);
     }
 
-    public void saveName(View view){
-        EditText nameText = (EditText) findViewById(R.id.name_input);
+    public void saveName(View view) {
         String name = nameText.getText().toString();
 
-        SharedPreferences settings = getSharedPreferences(MainMenuActivity.USER_INFO, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString(MainMenuActivity.PLAYER_NAME_KEY,name);
+        editor.putString(MainMenuActivity.PLAYER_NAME_KEY, name);
         editor.commit();
+
+        serverProxy.saveName(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID), name);
 
         Intent intent = new Intent();
         intent.putExtra(MainMenuActivity.NAME_SETTING_KEY, name);
@@ -42,27 +47,5 @@ public class SettingsActivity extends Activity {
         finish();
 
         finish();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_settings, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
