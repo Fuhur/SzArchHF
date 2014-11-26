@@ -209,9 +209,9 @@ public class GameActivity extends Activity implements SensorEventListener {
             canvas.drawText(Double.toString(spaceShip.getVelocity()),100,140,paint);
             canvas.drawText(Double.toString(mLastX),100,160,paint);
             backgroundSpace.drawStars(canvas, paint);
-            foregroundSpace.DrawEverything(canvas,paint,spaceShip.getPosition().Y - 0.1f);
+            foregroundSpace.DrawEverything(canvas,paint,spaceShip.getPosition().Y - (1 - Utility.playerPosOnScreenY));
             if (opponentPresent){
-                opponent.drawShipAsOpponent(canvas, paint, spaceShip.getPosition().Y - 0.1f);
+                opponent.drawShipAsOpponent(canvas, paint, spaceShip.getPosition().Y -  (1 - Utility.playerPosOnScreenY));
             }
             spaceShip.drawShip(canvas,paint);
 

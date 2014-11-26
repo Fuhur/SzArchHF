@@ -8,6 +8,8 @@ import android.content.res.Resources;
  */
 public class Utility {
 
+    public static final float playerPosOnScreenY = 0.9f;
+
     public static float RatioXToPX(float ratio){
         return Resources.getSystem().getDisplayMetrics().widthPixels * ratio;
     }

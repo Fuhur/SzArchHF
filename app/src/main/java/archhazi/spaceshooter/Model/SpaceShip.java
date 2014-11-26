@@ -106,16 +106,16 @@ public class SpaceShip{
 
         Path path = new Path();
         path.moveTo(Utility.RatioXToPX((getPosition().X + widthRatio / 2)),
-                Utility.RatioYToPX((0.9f)));
+                Utility.RatioYToPX((Utility.playerPosOnScreenY)));
 
         path.lineTo(Utility.RatioXToPX((getPosition().X)),
-                Utility.RatioYToPX((0.9f - lengthRatio)));
+                Utility.RatioYToPX((Utility.playerPosOnScreenY - lengthRatio)));
 
         path.lineTo(Utility.RatioXToPX((getPosition().X - widthRatio / 2)) ,
-                Utility.RatioYToPX((0.9f)));
+                Utility.RatioYToPX((Utility.playerPosOnScreenY)));
 
         path.lineTo(Utility.RatioXToPX((getPosition().X + widthRatio / 2)),
-                Utility.RatioYToPX((0.9f)));
+                Utility.RatioYToPX((Utility.playerPosOnScreenY)));
         path.close();
 
         canvas.drawPath(path,paint);
