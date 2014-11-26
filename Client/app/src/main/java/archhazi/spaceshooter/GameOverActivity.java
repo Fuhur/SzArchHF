@@ -79,11 +79,13 @@ public class GameOverActivity extends Activity {
                     request.put("deviceId", deviceId);
                     request.put("score", score);
 
-                    HttpResponse response = serverProxy.sendMessageToServer(request.toString(), "Finish");
+                    serverProxy.sendMessageToServer(request.toString(), "Finish");
 
                     Thread.sleep(100, 0);
 
-                    response = serverProxy.sendMessageToServer(deviceId, "Result");
+                    request = new JSONObject();
+                    request.put("deviceId", deviceId);
+                    HttpResponse response = serverProxy.sendMessageToServer(request.toString(), "Result");
                     String entity = EntityUtils.toString(response.getEntity()).trim();
                     final String result = entity.replace("\"", "");
 

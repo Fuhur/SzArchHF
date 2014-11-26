@@ -45,15 +45,22 @@ public class ServerProxy {
     public void calculateDelay() {
         new Thread() {
             public void run() {
-                HttpResponse response = sendMessageToServer("" + System.currentTimeMillis(), "Delay");
-                if (response != null) {
-                    try {
-                        String entity = EntityUtils.toString(response.getEntity());
-                        delay = Long.parseLong(entity);
-                        Log.d(TAG, "Delay: " + delay + " ms");
-                    } catch (IOException e) {
-                        Log.d(TAG, e.getMessage());
+
+                try {
+                    JSONObject request = new JSONObject();
+                    request.put("timestamp", System.currentTimeMillis());
+                    HttpResponse response = sendMessageToServer(request.toString(), "Delay");
+                    if (response != null) {
+                        try {
+                            String entity = EntityUtils.toString(response.getEntity());
+                            delay = Long.parseLong(entity);
+                            Log.d(TAG, "Delay: " + delay + " ms");
+                        } catch (IOException e) {
+                            Log.d(TAG, e.getMessage());
+                        }
                     }
+                } catch (JSONException e) {
+                    e.getMessage();
                 }
             }
         }.start();

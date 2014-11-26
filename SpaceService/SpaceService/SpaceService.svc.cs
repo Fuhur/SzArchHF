@@ -192,17 +192,13 @@ namespace SpaceService
 
             if (opponentPlayerState.Finished)
             {
-                if (playerState.Score < opponentPlayerState.Score)
-                {
-                    result = "Victory";
-                }
-                if (playerState.Score == opponentPlayerState.Score)
+                if (Math.Abs(playerState.Score - opponentPlayerState.Score) < 100)
                 {
                     result = "Draw";
                 }
-                if (playerState.Score > opponentPlayerState.Score)
+                else
                 {
-                    result = "Defeat";
+                    result = playerState.Score < opponentPlayerState.Score ? "Victory" : "Defeat";
                 }
             }
             else

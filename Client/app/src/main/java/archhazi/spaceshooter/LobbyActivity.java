@@ -30,6 +30,7 @@ public class LobbyActivity extends Activity {
     private ProgressBar progressBar;
 
     private ServerProxy serverProxy = new ServerProxy();
+    private boolean connecting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class LobbyActivity extends Activity {
             progressBar.setVisibility(View.INVISIBLE);
         } else {
             final String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+            connecting = true;
 
             SharedPreferences settings = getSharedPreferences(MainMenuActivity.USER_INFO, 0);
             serverProxy.saveName(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID), settings.getString(MainMenuActivity.PLAYER_NAME_KEY, "Player"));
@@ -58,17 +60,19 @@ public class LobbyActivity extends Activity {
                     JSONObject response = null;
 
                     // Only run for a minute
-                    for (int i = 0; i < 120 && !ready; i++) {
+                    for (int i = 0; i < 120 && !ready && connecting; i++) {
                         try {
-                            HttpResponse httpResponse = serverProxy.sendMessageToServer(deviceId, "StartMultiplayer");
-                            String entity = EntityUtils.toString(httpResponse.getEntity());
+                            JSONObject request = new JSONObject();
+                            request.put("deviceId", deviceId);
+                            HttpResponse httpResponse = serverProxy.sendMessageToServer(request.toString(), "StartMultiplayer");
+                            final String entity = EntityUtils.toString(httpResponse.getEntity());
                             response = new JSONObject(entity);
                             ready = (Boolean) response.get("Ready");
 
                             Thread.sleep(500, 0);
                         } catch (IOException e) {
                             Log.d(TAG, e.getMessage());
-                        } catch (JSONException e) {
+                        } catch (final JSONException e) {
                             Log.d(TAG, e.getMessage());
                         } catch (InterruptedException e) {
                             Log.d(TAG, e.getMessage());
@@ -76,13 +80,19 @@ public class LobbyActivity extends Activity {
                     }
 
                     if (!ready || response == null) {
-                        serverProxy.sendMessageToServer(deviceId, "QuitLobby");
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                waitingText.setText("Couldn't find opponent.");
-                                progressBar.setVisibility(View.INVISIBLE);
-                            }
-                        });
+                        try {
+                            JSONObject request = new JSONObject();
+                            request.put("deviceId", deviceId);
+                            serverProxy.sendMessageToServer(request.toString(), "QuitLobby");
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    waitingText.setText("Couldn't find opponent.");
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                        } catch (JSONException e) {
+                            Log.d(TAG, e.getMessage());
+                        }
                         return;
                     }
 
@@ -105,5 +115,12 @@ public class LobbyActivity extends Activity {
             };
             thread.start();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        connecting = false;
     }
 }
