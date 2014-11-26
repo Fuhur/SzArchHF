@@ -79,17 +79,17 @@ public class SpaceShip{
         shipVelocityX += shipAccelerationX * elapsedS;
     }
 
-    public void drawShip(Canvas canvas, Paint paint){
-        drawShip(canvas,paint,false);
+    public void drawShip(Canvas canvas, Paint paint, float minY){
+        drawShip(canvas,paint, minY,false);
     }
 
     public void drawShipAsOpponent(Canvas canvas, Paint paint, float minY){
         if (position.Y < minY + 1 && position.Y >= minY){
-            drawShip(canvas, paint, true);
+            drawShip(canvas, paint, minY, true);
         }
     }
 
-    public void drawShip(Canvas canvas, Paint paint, boolean asOpponent){
+    public void drawShip(Canvas canvas, Paint paint, float minY, boolean asOpponent){
 
         paint.setStyle(Paint.Style.FILL);
 
@@ -104,18 +104,20 @@ public class SpaceShip{
 
         }
 
+        float y = 1 - (position.Y - minY);
+
         Path path = new Path();
         path.moveTo(Utility.RatioXToPX((getPosition().X + widthRatio / 2)),
-                Utility.RatioYToPX((Utility.playerPosOnScreenY)));
+                Utility.RatioYToPX((y)));
 
         path.lineTo(Utility.RatioXToPX((getPosition().X)),
-                Utility.RatioYToPX((Utility.playerPosOnScreenY - lengthRatio)));
+                Utility.RatioYToPX((y - lengthRatio)));
 
         path.lineTo(Utility.RatioXToPX((getPosition().X - widthRatio / 2)) ,
-                Utility.RatioYToPX((Utility.playerPosOnScreenY)));
+                Utility.RatioYToPX((y)));
 
         path.lineTo(Utility.RatioXToPX((getPosition().X + widthRatio / 2)),
-                Utility.RatioYToPX((Utility.playerPosOnScreenY)));
+                Utility.RatioYToPX((y)));
         path.close();
 
         canvas.drawPath(path,paint);

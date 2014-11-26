@@ -213,7 +213,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             if (opponentPresent){
                 opponent.drawShipAsOpponent(canvas, paint, spaceShip.getPosition().Y -  (1 - Utility.playerPosOnScreenY));
             }
-            spaceShip.drawShip(canvas,paint);
+            spaceShip.drawShip(canvas,paint,spaceShip.getPosition().Y - (1 - Utility.playerPosOnScreenY));
 
             lastTime = actTime;
 
