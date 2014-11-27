@@ -28,6 +28,7 @@ import archhazi.spaceshooter.Model.BackgroundSpace;
 import archhazi.spaceshooter.Model.CollisionDetector;
 import archhazi.spaceshooter.Model.CollisionType;
 import archhazi.spaceshooter.Model.ForegroundSpace;
+import archhazi.spaceshooter.Model.ProgressBar;
 import archhazi.spaceshooter.Model.SpaceShip;
 
 public class GameActivity extends Activity implements SensorEventListener {
@@ -78,24 +79,11 @@ public class GameActivity extends Activity implements SensorEventListener {
     public class GameView extends View {
 
         private final View view = this;
-        private final Handler viewHandler;
         private Runnable updateView;
 
         public GameView(Context context) {
             super(context);
             // TODO Auto-generated constructor stub
-
-            // Elvileg ezzel jo a periodikus invalidate de ettol szakad...
-            viewHandler = new Handler();
-            updateView = new Runnable(){
-                @Override
-                public void run(){
-                    view.invalidate();
-                    viewHandler.postDelayed(this, 40);
-                }
-            };
-
-    //        viewHandler.postDelayed(updateView, 100);
         }
 
         private long lastTime = -1;
@@ -114,6 +102,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         private float trackLength;
 
         private ServerProxy serverProxy = new ServerProxy();
+
+        private ProgressBar trackBar;
 
         @Override
         protected void onDraw(Canvas canvas) {
@@ -143,10 +133,12 @@ public class GameActivity extends Activity implements SensorEventListener {
 
             // Ha ez az elso onDraw, init
             if (lastTime < 0){
-                spaceShip = new SpaceShip();
+                spaceShip = new SpaceShip(true);
                 foregroundSpace = new ForegroundSpace(seed,trackLength);
 
                 backgroundSpace = new BackgroundSpace(spaceShip.getVelocity());
+
+                trackBar = new ProgressBar(trackLength);
             }
 
             long actTime = System.currentTimeMillis();
@@ -174,7 +166,6 @@ public class GameActivity extends Activity implements SensorEventListener {
                 // HUGE TODO
                 switch (collision){
                     case GOAL:
-                        viewHandler.removeCallbacks(updateView);
                         gameEnded = true;
 
                         Intent intent = new Intent(getContext(),GameOverActivity.class);
@@ -232,6 +223,8 @@ public class GameActivity extends Activity implements SensorEventListener {
             }
             spaceShip.drawShip(canvas,paint,spaceShip.getPosition().Y - (1 - Utility.playerPosOnScreenY));
 
+            trackBar.drawBar(canvas, paint, spaceShip, opponent);
+
             lastTime = actTime;
 
             view.invalidate();
@@ -277,9 +270,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         public void setMultiplayer(boolean multi){
             opponentPresent = multi;
 
-            if (multi){
-                opponent = new SpaceShip();
-            }
+            opponent = new SpaceShip(multi);
         }
 
         public void setOpponetPosition(MyVector position){

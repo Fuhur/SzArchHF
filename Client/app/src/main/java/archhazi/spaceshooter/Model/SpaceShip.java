@@ -30,7 +30,12 @@ public class SpaceShip{
     private float invincibleSince = 0;
     private final float invincibilityTimeSpan = 2; // ms
 
+    public static final int PlayerColor = Color.RED;
+    public static final int OpponentColor = Color.BLUE;
+
     private float sideLength = -1;
+
+    private boolean present;
 
     public float sideLength(){
         if (sideLength < 0){
@@ -94,12 +99,12 @@ public class SpaceShip{
         paint.setStyle(Paint.Style.FILL);
 
         if (asOpponent){
-            paint.setColor(Color.BLUE);
+            paint.setColor(OpponentColor);
         } else {
             if (invincible){
                 paint.setColor(Color.DKGRAY);
             } else {
-                paint.setColor(Color.RED);
+                paint.setColor(PlayerColor);
             }
 
         }
@@ -147,8 +152,9 @@ public class SpaceShip{
         return shipVelocityY;
     }
 
-    public SpaceShip() {
+    public SpaceShip(boolean present) {
         this(new MyVector(0.5f,0f));
+        this.present = present;
     }
 
     public SpaceShip(MyVector position){
@@ -171,7 +177,13 @@ public class SpaceShip{
         invincibleSince = 0;
     }
 
+    public boolean isPresent() {
+        return present;
+    }
+
     public boolean isInvincible() {
         return invincible;
     }
+
+
 }
