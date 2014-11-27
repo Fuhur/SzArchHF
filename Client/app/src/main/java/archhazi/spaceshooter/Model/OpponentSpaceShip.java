@@ -34,8 +34,10 @@ public class OpponentSpaceShip extends SpaceShip {
 
     public void predictPosition(long actTime) {
 
-        float deltaX = (actTime - previousTimeStamp) * predictedVelocityX;
-        float deltaY = (actTime - previousTimeStamp) * predictedVelocityY;
+        float elapsedS =  (actTime - previousTimeStamp) / 1000f;
+
+        float deltaX = elapsedS * predictedVelocityX;
+        float deltaY = elapsedS * predictedVelocityY;
 
         position.X += deltaX;
         position.Y += deltaY;
@@ -49,13 +51,26 @@ public class OpponentSpaceShip extends SpaceShip {
 
     public void setPosition(MyVector pos, long timeStamp){
 
-        predictedVelocityX = (pos.X - lastKnowPosition.X) / (timeStamp - previousTimeStamp);
-        predictedVelocityY = (pos.Y - lastKnowPosition.Y) / (timeStamp - previousTimeStamp);
+        float elapsedS =  (timeStamp - previousTimeStamp) / 1000f;
+
+        predictedVelocityX = (pos.X - lastKnowPosition.X) / elapsedS;
+        predictedVelocityY = (pos.Y - lastKnowPosition.Y) / elapsedS;
 
         this.position = pos;
         lastKnowPosition = pos;
         previousTimeStamp = timeStamp;
 
+    }
+
+    public void setPositionAndVelocity(MyVector pos, float velocityX, float velocityY, long timeStamp){
+
+        predictedVelocityX = velocityX;
+        predictedVelocityY = velocityY;
+
+        this.position = pos;
+        lastKnowPosition = pos;
+
+        previousTimeStamp = timeStamp;
     }
 
 

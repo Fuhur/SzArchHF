@@ -139,7 +139,7 @@ public class GameActivity extends Activity implements SensorEventListener {
                 spaceShip = new SpaceShip();
                 foregroundSpace = new ForegroundSpace(seed,trackLength);
 
-                backgroundSpace = new BackgroundSpace(spaceShip.getVelocity());
+                backgroundSpace = new BackgroundSpace(spaceShip.getVelocityY());
 
                 trackBar = new ProgressBar(trackLength);
             }
@@ -189,7 +189,7 @@ public class GameActivity extends Activity implements SensorEventListener {
                         break;
                     case SPEEDBONUS:
                         spaceShip.accelerate(elapsedS);
-                        backgroundSpace.setTopLayerVelocity(spaceShip.getVelocity());
+                        backgroundSpace.setTopLayerVelocity(spaceShip.getVelocityY());
                         break;
                     case ASTEROID:
                         spaceShip.collided();
@@ -220,7 +220,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
             canvas.drawText(Double.toString(elapsed),100,100,paint);
             canvas.drawText(Double.toString(spaceShip.getPosition().Y),100,120,paint);
-            canvas.drawText(Double.toString(spaceShip.getVelocity()),100,140,paint);
+            canvas.drawText(Double.toString(spaceShip.getVelocityY()),100,140,paint);
 
             if (opponent == null){
 
@@ -257,8 +257,8 @@ public class GameActivity extends Activity implements SensorEventListener {
                             request.put("position", position);
 
                             JSONObject velocity = new JSONObject();
-                            velocity.put("X", 0); // TODO
-                            velocity.put("Y", spaceShip.getVelocity());
+                            velocity.put("X", spaceShip.getVelocityX() * mLastX);
+                            velocity.put("Y", spaceShip.getVelocityY());
                             request.put("velocity", velocity);
 
                             final HttpResponse response = serverProxy.sendMessageToServer(request.toString(), "Tick");
@@ -270,10 +270,12 @@ public class GameActivity extends Activity implements SensorEventListener {
                                 JSONObject opponentPosition = json.getJSONObject("OpponentPosition");
                                 float opponentX = (float) opponentPosition.getDouble("X");
                                 float opponentY = (float) opponentPosition.getDouble("Y");
-                                opponent.setPosition(new MyVector(opponentX, opponentY),System.currentTimeMillis());
+                             //   opponent.setPosition(new MyVector(opponentX, opponentY),System.currentTimeMillis());
 
                                 JSONObject opponentVelocity = json.getJSONObject("OpponentVelocity");
-                                // TODO
+                                float velocityX = (float) opponentVelocity.getDouble("X");
+                                float velocityY = (float) opponentVelocity.getDouble("Y");
+                                opponent.setPositionAndVelocity(new MyVector(opponentX, opponentY),velocityX,velocityY,System.currentTimeMillis());
                             }
                         } catch (JSONException e) {
                             Log.d(TAG, e.getMessage());

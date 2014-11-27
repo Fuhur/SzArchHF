@@ -139,8 +139,12 @@ public class SpaceShip{
         return position;
     }
 
-    public float getVelocity(){
+    public float getVelocityY(){
         return shipVelocityY;
+    }
+
+    public float getVelocityX(){
+        return shipVelocityX;
     }
 
     public SpaceShip() {
