@@ -34,14 +34,13 @@ public class ProgressBar {
                             Utility.RatioYToPX(positionY),
                             Utility.RatioXToPX(playerRad), paint);
 
-        if (opponent.isPresent()){
+        if (opponent != null){
             paint.setColor(SpaceShip.OpponentColor);
             float opponentPosX = (1 - 2 * gapX) * opponent.getPosition().Y / length + gapX;
             canvas.drawCircle(  Utility.RatioXToPX(opponentPosX),
                                 Utility.RatioYToPX(positionY),
                                 Utility.RatioXToPX(playerRad), paint);
         }
-
 
 
     }

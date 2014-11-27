@@ -28,6 +28,7 @@ import archhazi.spaceshooter.Model.BackgroundSpace;
 import archhazi.spaceshooter.Model.CollisionDetector;
 import archhazi.spaceshooter.Model.CollisionType;
 import archhazi.spaceshooter.Model.ForegroundSpace;
+import archhazi.spaceshooter.Model.OpponentSpaceShip;
 import archhazi.spaceshooter.Model.ProgressBar;
 import archhazi.spaceshooter.Model.SpaceShip;
 
@@ -92,7 +93,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         private ForegroundSpace foregroundSpace = null;
 
         private boolean opponentPresent = false;
-        private SpaceShip opponent = null;
+        private OpponentSpaceShip opponent = null;
 
         private Paint paint = new Paint();
 
@@ -133,7 +134,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
             // Ha ez az elso onDraw, init
             if (lastTime < 0){
-                spaceShip = new SpaceShip(true);
+                spaceShip = new SpaceShip();
                 foregroundSpace = new ForegroundSpace(seed,trackLength);
 
                 backgroundSpace = new BackgroundSpace(spaceShip.getVelocity());
@@ -159,6 +160,10 @@ public class GameActivity extends Activity implements SensorEventListener {
 
                 if (mInitialized){
                     spaceShip.move(mLastX, elapsedS);
+
+                    if (opponent != null){
+                        opponent.predictPosition(actTime);
+                    }
                 }
 
                 CollisionType collision = CollisionDetector.CheckCollisions(spaceShip, foregroundSpace);
@@ -219,7 +224,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             backgroundSpace.drawStars(canvas, paint);
             foregroundSpace.DrawEverything(canvas,paint,spaceShip.getPosition().Y - (1 - Utility.playerPosOnScreenY));
             if (opponentPresent){
-                opponent.drawShipAsOpponent(canvas, paint, spaceShip.getPosition().Y -  (1 - Utility.playerPosOnScreenY));
+                opponent.drawShip(canvas, paint, spaceShip.getPosition().Y -  (1 - Utility.playerPosOnScreenY));
             }
             spaceShip.drawShip(canvas,paint,spaceShip.getPosition().Y - (1 - Utility.playerPosOnScreenY));
 
@@ -247,7 +252,7 @@ public class GameActivity extends Activity implements SensorEventListener {
                                 JSONObject opponentPosition = json.getJSONObject("OpponentPosition");
                                 float opponentX = (float) opponentPosition.getDouble("X");
                                 float opponentY = (float) opponentPosition.getDouble("Y");
-                                opponent.setPosition(new MyVector(opponentX, opponentY));
+                                opponent.setPosition(new MyVector(opponentX, opponentY),System.currentTimeMillis());
                             }
                         } catch (JSONException e) {
                             Log.d(TAG, e.getMessage());
@@ -270,13 +275,10 @@ public class GameActivity extends Activity implements SensorEventListener {
         public void setMultiplayer(boolean multi){
             opponentPresent = multi;
 
-            opponent = new SpaceShip(multi);
-        }
-
-        public void setOpponetPosition(MyVector position){
-            if (opponentPresent){
-                opponent.setPosition(position);
+            if (multi){
+                opponent = new OpponentSpaceShip(System.currentTimeMillis());
             }
+
         }
 
     }

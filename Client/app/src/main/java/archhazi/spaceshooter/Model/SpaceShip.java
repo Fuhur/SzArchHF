@@ -12,12 +12,12 @@ import archhazi.spaceshooter.Utility;
  * Created by MBence on 11/21/2014.
  */
 public class SpaceShip{
-    private MyVector position;
+    protected MyVector position;
 
     private float lengthRatio = 0.12f;
     private float widthRatio = 0.1f;
 
-    private float startVelocityY = 0.6f;
+    protected float startVelocityY = 0.6f;
     private float afterCollisionVelocityY = 0f;
 
     private float shipVelocityX = 1/8f;
@@ -85,30 +85,11 @@ public class SpaceShip{
     }
 
     public void drawShip(Canvas canvas, Paint paint, float minY){
-        drawShip(canvas,paint, minY,false);
+        setPaint(paint);
+        drawBody(canvas,paint,minY);
     }
 
-    public void drawShipAsOpponent(Canvas canvas, Paint paint, float minY){
-        if (position.Y < minY + 1 && position.Y >= minY){
-            drawShip(canvas, paint, minY, true);
-        }
-    }
-
-    public void drawShip(Canvas canvas, Paint paint, float minY, boolean asOpponent){
-
-        paint.setStyle(Paint.Style.FILL);
-
-        if (asOpponent){
-            paint.setColor(OpponentColor);
-        } else {
-            if (invincible){
-                paint.setColor(Color.DKGRAY);
-            } else {
-                paint.setColor(PlayerColor);
-            }
-
-        }
-
+    protected void drawBody(Canvas canvas, Paint paint, float minY){
         float y = 1 - (position.Y - minY);
 
         Path path = new Path();
@@ -126,6 +107,16 @@ public class SpaceShip{
         path.close();
 
         canvas.drawPath(path,paint);
+    }
+
+    protected void setPaint(Paint paint){
+        paint.setStyle(Paint.Style.FILL);
+
+        if (invincible){
+            paint.setColor(Color.DKGRAY);
+        } else {
+            paint.setColor(PlayerColor);
+        }
     }
 
     public MyVector getFront(){
@@ -152,9 +143,9 @@ public class SpaceShip{
         return shipVelocityY;
     }
 
-    public SpaceShip(boolean present) {
+    public SpaceShip() {
         this(new MyVector(0.5f,0f));
-        this.present = present;
+        this.present = true;
     }
 
     public SpaceShip(MyVector position){
