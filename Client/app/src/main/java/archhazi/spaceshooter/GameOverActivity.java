@@ -92,7 +92,7 @@ public class GameOverActivity extends Activity {
                     runOnUiThread(new Runnable() {
                         public void run() {
                             gameOverText.setText(result);
-                            if (result == "Victory") {
+                            if (result.equals("Victory")) {
                                 gameOverText.setTextColor(getResources().getColor(R.color.green));
                             } else {
                                 gameOverText.setTextColor(getResources().getColor(R.color.red));

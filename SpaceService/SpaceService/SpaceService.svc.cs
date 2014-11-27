@@ -111,6 +111,7 @@ namespace SpaceService
             {
                 response.Ready = true;
                 response.LevelSeed = match.LevelSeed;
+                response.LevelLength = match.LevelLength;
                 response.StartTimeStamp = match.StartTimeStamp;
                 return response;
             }
@@ -146,7 +147,7 @@ namespace SpaceService
             return player;
         }
 
-        public TickResponse Tick(string deviceId, float X, float Y)
+        public TickResponse Tick(string deviceId, Vector position, Vector velocity)
         {
             var response = new TickResponse();
 
@@ -156,10 +157,12 @@ namespace SpaceService
                 return null;
             }
             var playerState = match.PlayerStates.FirstOrDefault(ps => ps.Player.DeviceId == deviceId);
-            playerState.Position = new Vector { X = X, Y = Y };
+            playerState.Position = position;
+            playerState.Velocity = velocity;
 
             var opponentPlayerState = match.PlayerStates.FirstOrDefault(ps => ps.Player.DeviceId != deviceId);
             response.OpponentPosition = opponentPlayerState.Position;
+            response.OpponentVelocity = opponentPlayerState.Velocity;
             return response;
         }
 

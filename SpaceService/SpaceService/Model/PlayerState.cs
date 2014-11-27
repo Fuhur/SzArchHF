@@ -8,7 +8,10 @@ namespace SpaceService.Model
     public class PlayerState
     {
         public Player Player { get; set; }
+
         public Vector Position { get; set; }
+        public Vector Velocity { get; set; }
+
         public bool Finished { get; set; }
         public int Score { get; set; }
         public bool ResultRequested { get; set; }
@@ -16,6 +19,8 @@ namespace SpaceService.Model
         public PlayerState()
         {
             Position = new Vector();
+            Velocity = new Vector();
+
             Finished = false;
             Score = int.MaxValue;
             ResultRequested = false;

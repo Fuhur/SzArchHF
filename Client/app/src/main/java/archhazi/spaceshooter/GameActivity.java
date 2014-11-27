@@ -250,8 +250,16 @@ public class GameActivity extends Activity implements SensorEventListener {
                         JSONObject request = new JSONObject();
                         try {
                             request.put("deviceId", deviceId);
+
+                            JSONObject position = new JSONObject();
                             request.put("X", spaceShip.getPosition().X);
                             request.put("Y", spaceShip.getPosition().Y);
+                            request.put("position", position);
+
+                            JSONObject velocity = new JSONObject();
+                            request.put("X", 0); // TODO
+                            request.put("Y", spaceShip.getVelocity());
+                            request.put("position", position);
 
                             final HttpResponse response = serverProxy.sendMessageToServer(request.toString(), "Tick");
                             if (response != null)
@@ -263,6 +271,9 @@ public class GameActivity extends Activity implements SensorEventListener {
                                 float opponentX = (float) opponentPosition.getDouble("X");
                                 float opponentY = (float) opponentPosition.getDouble("Y");
                                 opponent.setPosition(new MyVector(opponentX, opponentY),System.currentTimeMillis());
+
+                                JSONObject opponentVelocity = json.getJSONObject("OpponentVelocity");
+                                // TODO
                             }
                         } catch (JSONException e) {
                             Log.d(TAG, e.getMessage());
