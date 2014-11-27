@@ -46,21 +46,24 @@ public class ServerProxy {
         new Thread() {
             public void run() {
 
-                try {
-                    JSONObject request = new JSONObject();
-                    request.put("timestamp", System.currentTimeMillis());
-                    HttpResponse response = sendMessageToServer(request.toString(), "Delay");
-                    if (response != null) {
-                        try {
-                            String entity = EntityUtils.toString(response.getEntity());
-                            delay = Long.parseLong(entity);
-                            Log.d(TAG, "Delay: " + delay + " ms");
-                        } catch (IOException e) {
-                            Log.d(TAG, e.getMessage());
-                        }
+                long requestSent = System.currentTimeMillis();
+
+                HttpResponse response = getFromServer("ServerTime");
+
+                long responseArrived = System.currentTimeMillis();
+                long RTT = responseArrived - requestSent;
+
+                if (response != null) {
+                    try {
+                        String entity = EntityUtils.toString(response.getEntity());
+                        long responseServerTime = Long.parseLong(entity);
+                        long serverTime = responseServerTime + RTT / 2;
+                        delay = serverTime + RTT / 2 - responseArrived;
+
+                        Log.d(TAG, "Delay: " + delay + " ms");
+                    } catch (IOException e) {
+                        Log.d(TAG, e.getMessage());
                     }
-                } catch (JSONException e) {
-                    e.getMessage();
                 }
             }
         }.start();
@@ -91,7 +94,6 @@ public class ServerProxy {
     }
 
     public HttpResponse getFromServer(String method) {
-        String response = null;
         try {
             HttpClient httpClient = new DefaultHttpClient();
 

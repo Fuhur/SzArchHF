@@ -42,6 +42,10 @@ namespace SpaceService
         long Delay(long timestamp);
 
         [OperationContract]
+        [WebGet(ResponseFormat = WebMessageFormat.Json)]
+        long ServerTime();
+
+        [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         void Finish(string deviceId, int score);
 

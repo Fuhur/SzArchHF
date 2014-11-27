@@ -220,6 +220,11 @@ namespace SpaceService
             return TimeInMillis() - timestamp;
         }
 
+        public long ServerTime()
+        {
+            return TimeInMillis();
+        }
+
         ////////////////////////////////////////
 
         public List<string> Lobby()
