@@ -11,7 +11,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -41,8 +40,8 @@ public class GameActivity extends Activity implements SensorEventListener {
     private Sensor mAccelerometer;
 
     public final static String SCORE_KEY = "SCORE_KEY";
-    public final static float PRACTICE_LENGTH = 10.f;
-    public final static float MULTI_LENGTH = 5.f;
+    public final static float PRACTICE_LENGTH = 30.f;
+    public final static float MULTI_LENGTH = 30.f;
     public final static String TAG = "GameActivity";
 
     private String deviceId;
