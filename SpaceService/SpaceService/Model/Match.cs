@@ -9,6 +9,7 @@ namespace SpaceService.Model
 {
     public class Match
     {
+        public int LevelLength { get; set; }
         public int LevelSeed { get; set; }
         public long StartTimeStamp { get; set; }
 
@@ -17,6 +18,7 @@ namespace SpaceService.Model
         public Match()
         {
             PlayerStates = new PlayerState[2];
+            LevelLength = 30;
         }
     }
 }

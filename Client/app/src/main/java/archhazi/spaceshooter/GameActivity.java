@@ -41,7 +41,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     public final static String SCORE_KEY = "SCORE_KEY";
     public final static float PRACTICE_LENGTH = 30.f;
-    public final static float MULTI_LENGTH = 30.f;
+    // public final static float MULTI_LENGTH = 30.f;
     public final static String TAG = "GameActivity";
 
     private String deviceId;
