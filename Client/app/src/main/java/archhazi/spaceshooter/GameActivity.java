@@ -218,7 +218,13 @@ public class GameActivity extends Activity implements SensorEventListener {
             canvas.drawText(Double.toString(elapsed),100,100,paint);
             canvas.drawText(Double.toString(spaceShip.getPosition().Y),100,120,paint);
             canvas.drawText(Double.toString(spaceShip.getVelocity()),100,140,paint);
-            canvas.drawText(Double.toString(mLastX),100,160,paint);
+
+            if (opponent == null){
+
+                nemVoltItt = System.currentTimeMillis();
+            }
+
+            canvas.drawText(Float.toString(nemVoltItt),100,160,paint);
 
             backgroundSpace.drawStars(canvas, paint);
             foregroundSpace.DrawEverything(canvas,paint,spaceShip.getPosition().Y - (1 - Utility.playerPosOnScreenY));
@@ -262,6 +268,8 @@ public class GameActivity extends Activity implements SensorEventListener {
                 }.start();
             }
         }
+
+        float nemVoltItt = 0;
 
         public void setSeed(int seed){
             this.seed = seed;

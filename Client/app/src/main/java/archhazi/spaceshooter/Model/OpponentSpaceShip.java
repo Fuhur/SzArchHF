@@ -36,8 +36,7 @@ public class OpponentSpaceShip extends SpaceShip {
 
     public void setPosition(MyVector pos, long timeStamp){
 
-        float elapsed = timeStamp - previousTimeStamp;
-        float elapsedS = elapsed / 1000f;
+        float elapsedS = (timeStamp - previousTimeStamp) / 1000f;
 
         predictedVelocityX = (pos.X - position.X) / elapsedS;
         predictedVelocityY = (pos.Y - position.Y) / elapsedS;
