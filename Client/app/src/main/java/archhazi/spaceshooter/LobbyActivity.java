@@ -103,12 +103,14 @@ public class LobbyActivity extends Activity {
                         final int seed = (Integer) response.get("LevelSeed");
                         final int length = (Integer) response.get("LevelLength");
                         final long startTimeStamp = (Long) response.get("StartTimeStamp") - serverProxy.getDelay();
+                        final String opponent = (String) response.get("Opponent");
 
                         Intent intent = new Intent(LobbyActivity.this, GameActivity.class);
 
                         intent.putExtra(MainMenuActivity.SEED_KEY, seed);
                         intent.putExtra(MainMenuActivity.LENGTH_KEY, (float)length);
                         intent.putExtra(MainMenuActivity.START_TIME_KEY, startTimeStamp);
+                        intent.putExtra(MainMenuActivity.OPPONENT_KEY, opponent);
                         intent.putExtra(MainMenuActivity.MULTIPLAYER_KEY, true);
 
                         startActivity(intent);

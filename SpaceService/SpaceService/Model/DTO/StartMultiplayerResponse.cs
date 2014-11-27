@@ -12,5 +12,6 @@ namespace SpaceService.Model.DTO
         public int LevelSeed { get; set; }
         public int LevelLength { get; set; }
         public long StartTimeStamp { get; set; }
+        public string Opponent { get; set; }
     }
 }

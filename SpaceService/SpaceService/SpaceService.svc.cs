@@ -113,6 +113,9 @@ namespace SpaceService
                 response.LevelSeed = match.LevelSeed;
                 response.LevelLength = match.LevelLength;
                 response.StartTimeStamp = match.StartTimeStamp;
+
+                response.Opponent = match.PlayerStates.FirstOrDefault(ps => ps.Player.DeviceId != deviceId).Player.Name;
+
                 return response;
             }
             else
@@ -157,8 +160,8 @@ namespace SpaceService
                 return null;
             }
             var playerState = match.PlayerStates.FirstOrDefault(ps => ps.Player.DeviceId == deviceId);
-            playerState.Position = position;
-            playerState.Velocity = velocity;
+            playerState.Position = new Vector { X = position.X, Y = position.Y };
+            playerState.Velocity = new Vector { X = velocity.X, Y = velocity.Y };
 
             var opponentPlayerState = match.PlayerStates.FirstOrDefault(ps => ps.Player.DeviceId != deviceId);
             response.OpponentPosition = opponentPlayerState.Position;

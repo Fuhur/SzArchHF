@@ -47,6 +47,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     private String deviceId;
     private long startTime = -1;
+    private String opponentName;
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -126,6 +127,12 @@ public class GameActivity extends Activity implements SensorEventListener {
                 int xPos = (canvas.getWidth() / 2);
                 int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)) ;
                 canvas.drawText(Integer.toString((int)((startTime - System.currentTimeMillis()) / 1000.f) + 1), xPos, yPos, paint);
+
+                if (opponentPresent) {
+                    paint.setColor(Color.WHITE);
+                    paint.setTextSize(100);
+                    canvas.drawText("vs " + opponentName, xPos, yPos + 100, paint);
+                }
 
                 view.invalidate();
 
@@ -321,6 +328,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         int seed = intent.getIntExtra(MainMenuActivity.SEED_KEY, -1);
         float length = intent.getFloatExtra(MainMenuActivity.LENGTH_KEY, 1);
         startTime = intent.getLongExtra(MainMenuActivity.START_TIME_KEY, System.currentTimeMillis() + 3000);
+        opponentName = intent.getStringExtra(MainMenuActivity.OPPONENT_KEY);
         boolean multiplayer = intent.getBooleanExtra(MainMenuActivity.MULTIPLAYER_KEY,false);
 
         gameView.setSeed(seed);
