@@ -96,6 +96,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Service References\SpaceServiceReference\SpaceOpponent.SpaceServiceReference.HighScoreDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\SpaceServiceReference\SpaceOpponent.SpaceServiceReference.Match.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/SpaceService.Model" />
+  <xs:complexType name="ArrayOfHighScoreDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HighScoreDTO" nillable="true" type="tns:HighScoreDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHighScoreDTO" nillable="true" type="tns:ArrayOfHighScoreDTO" />
+  <xs:complexType name="HighScoreDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Score" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HighScoreDTO" nillable="true" type="tns:HighScoreDTO" />
   <xs:complexType name="StartMultiplayerResponse">
     <xs:sequence>
+      <xs:element minOccurs="0" name="LevelLength" type="xs:int" />
       <xs:element minOccurs="0" name="LevelSeed" type="xs:int" />
       <xs:element minOccurs="0" name="Ready" type="xs:boolean" />
       <xs:element minOccurs="0" name="StartTimeStamp" type="xs:long" />
@@ -12,6 +26,7 @@
   <xs:complexType name="TickResponse">
     <xs:sequence>
       <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SpaceService.Model" minOccurs="0" name="OpponentPosition" nillable="true" type="q1:Vector" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SpaceService.Model" minOccurs="0" name="OpponentVelocity" nillable="true" type="q2:Vector" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TickResponse" nillable="true" type="tns:TickResponse" />

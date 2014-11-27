@@ -15,12 +15,76 @@ namespace SpaceOpponent.SpaceServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="HighScoreDTO", Namespace="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO")]
+    [System.SerializableAttribute()]
+    public partial class HighScoreDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ScoreField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Score {
+            get {
+                return this.ScoreField;
+            }
+            set {
+                if ((this.ScoreField.Equals(value) != true)) {
+                    this.ScoreField = value;
+                    this.RaisePropertyChanged("Score");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="StartMultiplayerResponse", Namespace="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO")]
     [System.SerializableAttribute()]
     public partial class StartMultiplayerResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int LevelLengthField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int LevelSeedField;
@@ -38,6 +102,19 @@ namespace SpaceOpponent.SpaceServiceReference {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int LevelLength {
+            get {
+                return this.LevelLengthField;
+            }
+            set {
+                if ((this.LevelLengthField.Equals(value) != true)) {
+                    this.LevelLengthField = value;
+                    this.RaisePropertyChanged("LevelLength");
+                }
             }
         }
         
@@ -76,51 +153,6 @@ namespace SpaceOpponent.SpaceServiceReference {
                 if ((this.StartTimeStampField.Equals(value) != true)) {
                     this.StartTimeStampField = value;
                     this.RaisePropertyChanged("StartTimeStamp");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TickResponse", Namespace="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO")]
-    [System.SerializableAttribute()]
-    public partial class TickResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private SpaceOpponent.SpaceServiceReference.Vector OpponentPositionField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public SpaceOpponent.SpaceServiceReference.Vector OpponentPosition {
-            get {
-                return this.OpponentPositionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OpponentPositionField, value) != true)) {
-                    this.OpponentPositionField = value;
-                    this.RaisePropertyChanged("OpponentPosition");
                 }
             }
         }
@@ -198,12 +230,76 @@ namespace SpaceOpponent.SpaceServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TickResponse", Namespace="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO")]
+    [System.SerializableAttribute()]
+    public partial class TickResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SpaceOpponent.SpaceServiceReference.Vector OpponentPositionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SpaceOpponent.SpaceServiceReference.Vector OpponentVelocityField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public SpaceOpponent.SpaceServiceReference.Vector OpponentPosition {
+            get {
+                return this.OpponentPositionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OpponentPositionField, value) != true)) {
+                    this.OpponentPositionField = value;
+                    this.RaisePropertyChanged("OpponentPosition");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public SpaceOpponent.SpaceServiceReference.Vector OpponentVelocity {
+            get {
+                return this.OpponentVelocityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OpponentVelocityField, value) != true)) {
+                    this.OpponentVelocityField = value;
+                    this.RaisePropertyChanged("OpponentVelocity");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Match", Namespace="http://schemas.datacontract.org/2004/07/SpaceService.Model")]
     [System.SerializableAttribute()]
     public partial class Match : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int LevelLengthField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int LevelSeedField;
@@ -221,6 +317,19 @@ namespace SpaceOpponent.SpaceServiceReference {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int LevelLength {
+            get {
+                return this.LevelLengthField;
+            }
+            set {
+                if ((this.LevelLengthField.Equals(value) != true)) {
+                    this.LevelLengthField = value;
+                    this.RaisePropertyChanged("LevelLength");
+                }
             }
         }
         
@@ -295,7 +404,10 @@ namespace SpaceOpponent.SpaceServiceReference {
         private bool ResultRequestedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private float ScoreField;
+        private int ScoreField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SpaceOpponent.SpaceServiceReference.Vector VelocityField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -360,7 +472,7 @@ namespace SpaceOpponent.SpaceServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public float Score {
+        public int Score {
             get {
                 return this.ScoreField;
             }
@@ -368,6 +480,19 @@ namespace SpaceOpponent.SpaceServiceReference {
                 if ((this.ScoreField.Equals(value) != true)) {
                     this.ScoreField = value;
                     this.RaisePropertyChanged("Score");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public SpaceOpponent.SpaceServiceReference.Vector Velocity {
+            get {
+                return this.VelocityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VelocityField, value) != true)) {
+                    this.VelocityField = value;
+                    this.RaisePropertyChanged("Velocity");
                 }
             }
         }
@@ -395,7 +520,7 @@ namespace SpaceOpponent.SpaceServiceReference {
         private string DeviceIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> HighScoreField;
+        private System.Nullable<int> HighScoreField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
@@ -427,7 +552,7 @@ namespace SpaceOpponent.SpaceServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> HighScore {
+        public System.Nullable<int> HighScore {
             get {
                 return this.HighScoreField;
             }
@@ -486,10 +611,16 @@ namespace SpaceOpponent.SpaceServiceReference {
         System.Threading.Tasks.Task SetNameAsync(string deviceId, string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/UploadHighScore", ReplyAction="http://tempuri.org/ISpaceService/UploadHighScoreResponse")]
-        void UploadHighScore(string deviceId, float score);
+        void UploadHighScore(string deviceId, int score);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/UploadHighScore", ReplyAction="http://tempuri.org/ISpaceService/UploadHighScoreResponse")]
-        System.Threading.Tasks.Task UploadHighScoreAsync(string deviceId, float score);
+        System.Threading.Tasks.Task UploadHighScoreAsync(string deviceId, int score);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/HighScores", ReplyAction="http://tempuri.org/ISpaceService/HighScoresResponse")]
+        SpaceOpponent.SpaceServiceReference.HighScoreDTO[] HighScores();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/HighScores", ReplyAction="http://tempuri.org/ISpaceService/HighScoresResponse")]
+        System.Threading.Tasks.Task<SpaceOpponent.SpaceServiceReference.HighScoreDTO[]> HighScoresAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/StartMultiplayer", ReplyAction="http://tempuri.org/ISpaceService/StartMultiplayerResponse")]
         SpaceOpponent.SpaceServiceReference.StartMultiplayerResponse StartMultiplayer(string deviceId);
@@ -497,11 +628,17 @@ namespace SpaceOpponent.SpaceServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/StartMultiplayer", ReplyAction="http://tempuri.org/ISpaceService/StartMultiplayerResponse")]
         System.Threading.Tasks.Task<SpaceOpponent.SpaceServiceReference.StartMultiplayerResponse> StartMultiplayerAsync(string deviceId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/Tick", ReplyAction="http://tempuri.org/ISpaceService/TickResponse")]
-        SpaceOpponent.SpaceServiceReference.TickResponse Tick(string deviceId, float X, float Y);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/QuitLobby", ReplyAction="http://tempuri.org/ISpaceService/QuitLobbyResponse")]
+        void QuitLobby(string deviceId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/QuitLobby", ReplyAction="http://tempuri.org/ISpaceService/QuitLobbyResponse")]
+        System.Threading.Tasks.Task QuitLobbyAsync(string deviceId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/Tick", ReplyAction="http://tempuri.org/ISpaceService/TickResponse")]
-        System.Threading.Tasks.Task<SpaceOpponent.SpaceServiceReference.TickResponse> TickAsync(string deviceId, float X, float Y);
+        SpaceOpponent.SpaceServiceReference.TickResponse Tick(string deviceId, SpaceOpponent.SpaceServiceReference.Vector position, SpaceOpponent.SpaceServiceReference.Vector velocity);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/Tick", ReplyAction="http://tempuri.org/ISpaceService/TickResponse")]
+        System.Threading.Tasks.Task<SpaceOpponent.SpaceServiceReference.TickResponse> TickAsync(string deviceId, SpaceOpponent.SpaceServiceReference.Vector position, SpaceOpponent.SpaceServiceReference.Vector velocity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/Delay", ReplyAction="http://tempuri.org/ISpaceService/DelayResponse")]
         long Delay(long timestamp);
@@ -509,11 +646,17 @@ namespace SpaceOpponent.SpaceServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/Delay", ReplyAction="http://tempuri.org/ISpaceService/DelayResponse")]
         System.Threading.Tasks.Task<long> DelayAsync(long timestamp);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/Finish", ReplyAction="http://tempuri.org/ISpaceService/FinishResponse")]
-        void Finish(string deviceId, float score);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/ServerTime", ReplyAction="http://tempuri.org/ISpaceService/ServerTimeResponse")]
+        long ServerTime();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/ServerTime", ReplyAction="http://tempuri.org/ISpaceService/ServerTimeResponse")]
+        System.Threading.Tasks.Task<long> ServerTimeAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/Finish", ReplyAction="http://tempuri.org/ISpaceService/FinishResponse")]
-        System.Threading.Tasks.Task FinishAsync(string deviceId, float score);
+        void Finish(string deviceId, int score);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/Finish", ReplyAction="http://tempuri.org/ISpaceService/FinishResponse")]
+        System.Threading.Tasks.Task FinishAsync(string deviceId, int score);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISpaceService/Result", ReplyAction="http://tempuri.org/ISpaceService/ResultResponse")]
         string Result(string deviceId);
@@ -575,12 +718,20 @@ namespace SpaceOpponent.SpaceServiceReference {
             return base.Channel.SetNameAsync(deviceId, name);
         }
         
-        public void UploadHighScore(string deviceId, float score) {
+        public void UploadHighScore(string deviceId, int score) {
             base.Channel.UploadHighScore(deviceId, score);
         }
         
-        public System.Threading.Tasks.Task UploadHighScoreAsync(string deviceId, float score) {
+        public System.Threading.Tasks.Task UploadHighScoreAsync(string deviceId, int score) {
             return base.Channel.UploadHighScoreAsync(deviceId, score);
+        }
+        
+        public SpaceOpponent.SpaceServiceReference.HighScoreDTO[] HighScores() {
+            return base.Channel.HighScores();
+        }
+        
+        public System.Threading.Tasks.Task<SpaceOpponent.SpaceServiceReference.HighScoreDTO[]> HighScoresAsync() {
+            return base.Channel.HighScoresAsync();
         }
         
         public SpaceOpponent.SpaceServiceReference.StartMultiplayerResponse StartMultiplayer(string deviceId) {
@@ -591,12 +742,20 @@ namespace SpaceOpponent.SpaceServiceReference {
             return base.Channel.StartMultiplayerAsync(deviceId);
         }
         
-        public SpaceOpponent.SpaceServiceReference.TickResponse Tick(string deviceId, float X, float Y) {
-            return base.Channel.Tick(deviceId, X, Y);
+        public void QuitLobby(string deviceId) {
+            base.Channel.QuitLobby(deviceId);
         }
         
-        public System.Threading.Tasks.Task<SpaceOpponent.SpaceServiceReference.TickResponse> TickAsync(string deviceId, float X, float Y) {
-            return base.Channel.TickAsync(deviceId, X, Y);
+        public System.Threading.Tasks.Task QuitLobbyAsync(string deviceId) {
+            return base.Channel.QuitLobbyAsync(deviceId);
+        }
+        
+        public SpaceOpponent.SpaceServiceReference.TickResponse Tick(string deviceId, SpaceOpponent.SpaceServiceReference.Vector position, SpaceOpponent.SpaceServiceReference.Vector velocity) {
+            return base.Channel.Tick(deviceId, position, velocity);
+        }
+        
+        public System.Threading.Tasks.Task<SpaceOpponent.SpaceServiceReference.TickResponse> TickAsync(string deviceId, SpaceOpponent.SpaceServiceReference.Vector position, SpaceOpponent.SpaceServiceReference.Vector velocity) {
+            return base.Channel.TickAsync(deviceId, position, velocity);
         }
         
         public long Delay(long timestamp) {
@@ -607,11 +766,19 @@ namespace SpaceOpponent.SpaceServiceReference {
             return base.Channel.DelayAsync(timestamp);
         }
         
-        public void Finish(string deviceId, float score) {
+        public long ServerTime() {
+            return base.Channel.ServerTime();
+        }
+        
+        public System.Threading.Tasks.Task<long> ServerTimeAsync() {
+            return base.Channel.ServerTimeAsync();
+        }
+        
+        public void Finish(string deviceId, int score) {
             base.Channel.Finish(deviceId, score);
         }
         
-        public System.Threading.Tasks.Task FinishAsync(string deviceId, float score) {
+        public System.Threading.Tasks.Task FinishAsync(string deviceId, int score) {
             return base.Channel.FinishAsync(deviceId, score);
         }
         

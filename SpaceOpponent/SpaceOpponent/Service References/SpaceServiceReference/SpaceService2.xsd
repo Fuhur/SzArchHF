@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO" />
-  <xs:import schemaLocation="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:import schemaLocation="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/SpaceService.Model" />
+  <xs:import schemaLocation="http://nmobil.aut.bme.hu/SpaceService/SpaceService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:element name="SetName">
     <xs:complexType>
       <xs:sequence>
@@ -20,13 +20,25 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="deviceId" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="score" type="xs:float" />
+        <xs:element minOccurs="0" name="score" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UploadHighScoreResponse">
     <xs:complexType>
       <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HighScores">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HighScoresResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO" minOccurs="0" name="HighScoresResult" nillable="true" type="q1:ArrayOfHighScoreDTO" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="StartMultiplayer">
@@ -39,23 +51,35 @@
   <xs:element name="StartMultiplayerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO" minOccurs="0" name="StartMultiplayerResult" nillable="true" type="q1:StartMultiplayerResponse" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO" minOccurs="0" name="StartMultiplayerResult" nillable="true" type="q2:StartMultiplayerResponse" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuitLobby">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="deviceId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuitLobbyResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="Tick">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="deviceId" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="X" type="xs:float" />
-        <xs:element minOccurs="0" name="Y" type="xs:float" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SpaceService.Model" minOccurs="0" name="position" nillable="true" type="q3:Vector" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SpaceService.Model" minOccurs="0" name="velocity" nillable="true" type="q4:Vector" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="TickResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO" minOccurs="0" name="TickResult" nillable="true" type="q2:TickResponse" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/SpaceService.Model.DTO" minOccurs="0" name="TickResult" nillable="true" type="q5:TickResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -73,11 +97,23 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ServerTime">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ServerTimeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ServerTimeResult" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Finish">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="deviceId" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="score" type="xs:float" />
+        <xs:element minOccurs="0" name="score" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -108,7 +144,7 @@
   <xs:element name="LobbyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="LobbyResult" nillable="true" type="q3:ArrayOfstring" />
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="LobbyResult" nillable="true" type="q6:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -120,7 +156,7 @@
   <xs:element name="MatchesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SpaceService.Model" minOccurs="0" name="MatchesResult" nillable="true" type="q4:ArrayOfMatch" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SpaceService.Model" minOccurs="0" name="MatchesResult" nillable="true" type="q7:ArrayOfMatch" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -94,14 +94,16 @@ namespace SpaceOpponent
 
 				Dispatcher.Invoke((Action)(() => 
 				{
-					client.Finish(deviceTextBox.Text, actTime - startTimeStamp);
+					client.Finish(deviceTextBox.Text, (int)(actTime - startTimeStamp));
 				}));
 				timer.Stop();
 			}
 
 			Dispatcher.Invoke((Action)(() =>
 			{
-				client.Tick(deviceTextBox.Text, 0.5f, Y);
+				client.Tick(deviceTextBox.Text, 
+					new SpaceOpponent.SpaceServiceReference.Vector { X = 0.5f, Y = Y }, 
+					new SpaceOpponent.SpaceServiceReference.Vector { X = 0, Y = 0.6f });
 				WriteLine("Y " + Y);
 			}));
 		}

@@ -252,14 +252,14 @@ public class GameActivity extends Activity implements SensorEventListener {
                             request.put("deviceId", deviceId);
 
                             JSONObject position = new JSONObject();
-                            request.put("X", spaceShip.getPosition().X);
-                            request.put("Y", spaceShip.getPosition().Y);
+                            position.put("X", spaceShip.getPosition().X);
+                            position.put("Y", spaceShip.getPosition().Y);
                             request.put("position", position);
 
                             JSONObject velocity = new JSONObject();
-                            request.put("X", 0); // TODO
-                            request.put("Y", spaceShip.getVelocity());
-                            request.put("position", position);
+                            velocity.put("X", 0); // TODO
+                            velocity.put("Y", spaceShip.getVelocity());
+                            request.put("velocity", velocity);
 
                             final HttpResponse response = serverProxy.sendMessageToServer(request.toString(), "Tick");
                             if (response != null)

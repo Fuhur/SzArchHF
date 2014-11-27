@@ -30,8 +30,26 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="HighScores">
+      <soap12:operation soapAction="http://tempuri.org/ISpaceService/HighScores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="StartMultiplayer">
       <soap12:operation soapAction="http://tempuri.org/ISpaceService/StartMultiplayer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuitLobby">
+      <soap12:operation soapAction="http://tempuri.org/ISpaceService/QuitLobby" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -50,6 +68,15 @@
     </wsdl:operation>
     <wsdl:operation name="Delay">
       <soap12:operation soapAction="http://tempuri.org/ISpaceService/Delay" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ServerTime">
+      <soap12:operation soapAction="http://tempuri.org/ISpaceService/ServerTime" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
