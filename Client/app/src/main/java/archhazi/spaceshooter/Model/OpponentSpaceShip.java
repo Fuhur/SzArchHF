@@ -12,11 +12,15 @@ public class OpponentSpaceShip extends SpaceShip {
 
     private float previousTimeStamp = 0;
 
+    private MyVector lastKnowPosition;
+
     private float predictedVelocityX = 0;
     private float predictedVelocityY = startVelocityY;
 
     public OpponentSpaceShip(long timeStamp){
         this.previousTimeStamp = timeStamp;
+
+        lastKnowPosition = position;
     }
 
     protected void setPaint(Paint paint){
@@ -38,10 +42,11 @@ public class OpponentSpaceShip extends SpaceShip {
 
         float elapsedS = (timeStamp - previousTimeStamp) / 1000f;
 
-        predictedVelocityX = (pos.X - position.X) / elapsedS;
-        predictedVelocityY = (pos.Y - position.Y) / elapsedS;
+        predictedVelocityX = (pos.X - lastKnowPosition.X) / elapsedS;
+        predictedVelocityY = (pos.Y - lastKnowPosition.Y) / elapsedS;
 
         this.position = pos;
+        lastKnowPosition = pos;
         previousTimeStamp = timeStamp;
     }
 
