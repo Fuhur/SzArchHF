@@ -23,6 +23,10 @@ public class OpponentSpaceShip extends SpaceShip {
         lastKnowPosition = position;
     }
 
+    public float getPredictedVelocityY(){
+        return predictedVelocityY;
+    }
+
     protected void setPaint(Paint paint){
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.BLUE);
@@ -41,7 +45,6 @@ public class OpponentSpaceShip extends SpaceShip {
             position.X += a;
         }
 
-
     }
 
     public void setPosition(MyVector pos, long timeStamp){
@@ -53,11 +56,6 @@ public class OpponentSpaceShip extends SpaceShip {
         lastKnowPosition = pos;
         previousTimeStamp = timeStamp;
 
-        if (Float.isNaN(position.Y) || Float.isNaN(position.X) || Double.isNaN(previousTimeStamp)){
-            float a = 1;
-            position.X *= a;
-            return;
-        }
     }
 
 

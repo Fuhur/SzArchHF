@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -75,6 +76,8 @@ public class GameActivity extends Activity implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // can be safely ignored for this demo
     }
+
+
 
     public class GameView extends View {
 
@@ -223,6 +226,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
                 nemVoltItt = System.currentTimeMillis();
             } else {
+                canvas.drawText(Float.toString(opponent.getPredictedVelocityY()*1000f),100,180,paint);
                 canvas.drawText(Float.toString(opponent.getPosition().Y),100,160,paint);
             }
 
@@ -288,7 +292,6 @@ public class GameActivity extends Activity implements SensorEventListener {
             }
 
         }
-
     }
 
     @Override
@@ -317,6 +320,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
         deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
 
