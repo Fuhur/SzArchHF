@@ -222,9 +222,10 @@ public class GameActivity extends Activity implements SensorEventListener {
             if (opponent == null){
 
                 nemVoltItt = System.currentTimeMillis();
+            } else {
+                canvas.drawText(Float.toString(opponent.getPosition().Y),100,160,paint);
             }
 
-            canvas.drawText(Float.toString(nemVoltItt),100,160,paint);
 
             backgroundSpace.drawStars(canvas, paint);
             foregroundSpace.DrawEverything(canvas,paint,spaceShip.getPosition().Y - (1 - Utility.playerPosOnScreenY));

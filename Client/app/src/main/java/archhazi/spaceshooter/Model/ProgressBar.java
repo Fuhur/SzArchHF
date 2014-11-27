@@ -29,20 +29,24 @@ public class ProgressBar {
         drawTrack(canvas,paint);
 
         paint.setColor(SpaceShip.PlayerColor);
-        float posX = (1 - 2 * gapX) * player.getPosition().Y / length + gapX;
+        float posX = posToBarCoords(player.getPosition().Y);
         canvas.drawCircle(  Utility.RatioXToPX(posX),
                             Utility.RatioYToPX(positionY),
                             Utility.RatioXToPX(playerRad), paint);
 
         if (opponent != null){
             paint.setColor(SpaceShip.OpponentColor);
-            float opponentPosX = (1 - 2 * gapX) * opponent.getPosition().Y / length + gapX;
+            float opponentPosX = posToBarCoords(opponent.getPosition().Y);
             canvas.drawCircle(  Utility.RatioXToPX(opponentPosX),
                                 Utility.RatioYToPX(positionY),
                                 Utility.RatioXToPX(playerRad), paint);
         }
 
 
+    }
+
+    private float posToBarCoords(float posY){
+        return (1 - 2 * gapX) * posY / length + gapX;
     }
 
     private void drawTrack(Canvas canvas, Paint paint){

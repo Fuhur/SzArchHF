@@ -10,7 +10,7 @@ import archhazi.spaceshooter.MyVector;
  */
 public class OpponentSpaceShip extends SpaceShip {
 
-    private float previousTimeStamp = 0;
+    private long previousTimeStamp = 0;
 
     private MyVector lastKnowPosition;
 
@@ -29,25 +29,35 @@ public class OpponentSpaceShip extends SpaceShip {
     }
 
     public void predictPosition(long actTime) {
-        float elapsedS = (actTime - previousTimeStamp) / 1000f;
 
-        float deltaX = elapsedS * predictedVelocityX;
-        float deltaY = elapsedS * predictedVelocityY;
+        float deltaX = (actTime - previousTimeStamp) * predictedVelocityX;
+        float deltaY = (actTime - previousTimeStamp) * predictedVelocityY;
 
         position.X += deltaX;
         position.Y += deltaY;
+
+        if (Float.isNaN(position.Y) || Float.isNaN(position.X) || Double.isNaN(previousTimeStamp)){
+            float a = 0;
+            position.X += a;
+        }
+
+
     }
 
     public void setPosition(MyVector pos, long timeStamp){
 
-        float elapsedS = (timeStamp - previousTimeStamp) / 1000f;
-
-        predictedVelocityX = (pos.X - lastKnowPosition.X) / elapsedS;
-        predictedVelocityY = (pos.Y - lastKnowPosition.Y) / elapsedS;
+        predictedVelocityX = (pos.X - lastKnowPosition.X) / (timeStamp - previousTimeStamp);
+        predictedVelocityY = (pos.Y - lastKnowPosition.Y) / (timeStamp - previousTimeStamp);
 
         this.position = pos;
         lastKnowPosition = pos;
         previousTimeStamp = timeStamp;
+
+        if (Float.isNaN(position.Y) || Float.isNaN(position.X) || Double.isNaN(previousTimeStamp)){
+            float a = 1;
+            position.X *= a;
+            return;
+        }
     }
 
 
