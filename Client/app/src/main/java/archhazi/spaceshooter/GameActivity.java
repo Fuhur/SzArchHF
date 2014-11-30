@@ -83,11 +83,9 @@ public class GameActivity extends Activity implements SensorEventListener {
     public class GameView extends View {
 
         private final View view = this;
-        private Runnable updateView;
 
         public GameView(Context context) {
             super(context);
-            // TODO Auto-generated constructor stub
         }
 
         private long lastTime = -1;
@@ -177,7 +175,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 
                 CollisionType collision = CollisionDetector.CheckCollisions(spaceShip, foregroundSpace);
 
-                // HUGE TODO
                 switch (collision){
                     case GOAL:
                         gameEnded = true;
@@ -200,9 +197,6 @@ public class GameActivity extends Activity implements SensorEventListener {
                         break;
                     case ASTEROID:
                         spaceShip.collided();
-                     //   viewHandler.removeCallbacks(updateView);
-                     //   gameEnded = true;
-                     //   finish();
                         break;
                     case NO_COLLISION:
 
@@ -213,30 +207,11 @@ public class GameActivity extends Activity implements SensorEventListener {
 
             }
 
-            // TODO Auto-generated method stub
             super.onDraw(canvas);
 
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.BLACK);
             canvas.drawPaint(paint);
-
-            // To remove
-            paint.setColor(Color.parseColor("#CD5C5C"));
-            paint.setTextSize(12);
-            paint.setTextAlign(Paint.Align.LEFT);
-
-            canvas.drawText(Double.toString(elapsed),100,100,paint);
-            canvas.drawText(Double.toString(spaceShip.getPosition().Y),100,120,paint);
-            canvas.drawText(Double.toString(spaceShip.getVelocityY()),100,140,paint);
-
-            if (opponent == null){
-
-                nemVoltItt = System.currentTimeMillis();
-            } else {
-                canvas.drawText(Float.toString(opponent.getPredictedVelocityY()*1000f),100,180,paint);
-                canvas.drawText(Float.toString(opponent.getPosition().Y),100,160,paint);
-            }
-
 
             backgroundSpace.drawStars(canvas, paint);
             foregroundSpace.DrawEverything(canvas,paint,spaceShip.getPosition().Y - (1 - Utility.playerPosOnScreenY));
@@ -293,8 +268,6 @@ public class GameActivity extends Activity implements SensorEventListener {
                 }.start();
             }
         }
-
-        float nemVoltItt = 0;
 
         public void setSeed(int seed){
             this.seed = seed;

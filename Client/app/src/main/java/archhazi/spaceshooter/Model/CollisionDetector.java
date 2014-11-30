@@ -78,15 +78,11 @@ public class CollisionDetector {
 
         MyVector center = ship.getCenter();
 
-        float sideLength = ship.sideLength();
-
         for(Asteroid asteroid:asteroids){
 
             if (Math.abs(asteroid.getPosition().Y - ship.getPosition().Y) > 0.5){
                 continue;
             }
-
-            float radiusSquared = asteroid.getRadius() * asteroid.getRadius();
 
             float radiusSquaredX = asteroid.getRadius() * asteroid.getRadius();
             float radiusSquaredY = asteroid.getRadius() * asteroid.getRadius() / Utility.YtoXratio() / Utility.YtoXratio();
@@ -98,61 +94,6 @@ public class CollisionDetector {
                     || InEllipse(asteroid.getPosition(),radiusSquaredX,radiusSquaredY,center) ){
                 return true;
             }
-            /*
-            if (    (front.X - asteroid.position.X) * (front.X - asteroid.position.X) / radiusSquaredX + (front.Y - asteroid.position.Y) * (front.Y - asteroid.position.Y) / radiusSquaredY < 1
-                    || (left.X - asteroid.position.X) * (left.X - asteroid.position.X) / radiusSquaredX + (left.Y - asteroid.position.Y) * (left.Y - asteroid.position.Y) / radiusSquaredY < 1
-                    || (right.X - asteroid.position.X) * (right.X - asteroid.position.X) / radiusSquaredX + (right.Y - asteroid.position.Y) * (right.Y - asteroid.position.Y) / radiusSquaredY < 1
-                    || (center.X - asteroid.position.X) * (center.X - asteroid.position.X) / radiusSquaredX + (center.Y - asteroid.position.Y) * (center.Y - asteroid.position.Y) / radiusSquaredY < 1 ){
-                return true;
-            } else {
-                return false;
-            }
-            */
-            /*
-            if (    MyVector.distanceSquared(front,asteroid.position) < radiusSquared
-                    || MyVector.distanceSquared(left,asteroid.position) < radiusSquared
-                    || MyVector.distanceSquared(right,asteroid.position) < radiusSquared
-                    || MyVector.distanceSquared(center,asteroid.position) < radiusSquared ){
-                return true;
-            } else {
-                return false;
-            }
-            */
-            /*
-            MyVector B = front;
-            MyVector A = left;
-
-            float Dx = (B.X - A.X)/sideLength;
-            float Dy = (B.Y - A.Y)/sideLength;
-
-            float t = Dx * (asteroid.position.X - A.X) + Dy * (asteroid.position.Y - A.Y);
-
-            float Ex = t*Dx + A.X;
-            float Ey = t*Dy + A.Y;
-
-            float tav = (float)Math.sqrt((Ex-asteroid.position.X)*(Ex-asteroid.position.X) + (Ey-asteroid.position.Y)*(Ey-asteroid.position.Y));
-
-            if (tav < asteroid.radius && ((A.X > Ex && Ex > B.X) || (A.X < Ex && Ex < B.X)) && ((A.Y > Ey && Ey > B.Y) || (A.Y < Ey && Ey < B.Y))){
-                return true;
-            }
-
-            B = front;
-            A = right;
-
-            Dx = (B.X - A.X)/sideLength;
-            Dy = (B.Y - A.Y)/sideLength;
-
-            t = Dx * (asteroid.position.X - A.X) + Dy * (asteroid.position.Y - A.Y);
-
-            Ex = t*Dx + A.X;
-            Ey = t*Dy + A.Y;
-
-            tav = (float)Math.sqrt((Ex-asteroid.position.X)*(Ex-asteroid.position.X) + (Ey-asteroid.position.Y)*(Ey-asteroid.position.Y));
-
-            if (tav < asteroid.radius && ((A.X > Ex && Ex > B.X) || (A.X < Ex && Ex < B.X)) && ((A.Y > Ey && Ey > B.Y) || (A.Y < Ey && Ey < B.Y))){
-                return true;
-            }
-             */
         }
 
         return  false;
