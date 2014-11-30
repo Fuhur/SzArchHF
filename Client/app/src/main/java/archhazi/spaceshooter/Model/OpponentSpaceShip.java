@@ -23,10 +23,6 @@ public class OpponentSpaceShip extends SpaceShip {
         lastKnowPosition = position;
     }
 
-    public float getPredictedVelocityY(){
-        return predictedVelocityY;
-    }
-
     protected void setPaint(Paint paint){
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.BLUE);
@@ -46,19 +42,6 @@ public class OpponentSpaceShip extends SpaceShip {
             float a = 0;
             position.X += a;
         }
-
-    }
-
-    public void setPosition(MyVector pos, long timeStamp){
-
-        float elapsedS =  (timeStamp - previousTimeStamp) / 1000f;
-
-        predictedVelocityX = (pos.X - lastKnowPosition.X) / elapsedS;
-        predictedVelocityY = (pos.Y - lastKnowPosition.Y) / elapsedS;
-
-        this.position = pos;
-        lastKnowPosition = pos;
-        previousTimeStamp = timeStamp;
 
     }
 

@@ -36,13 +36,11 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     float mLastX,mLastY,mLastZ;
     boolean mInitialized= false;
-    float NOISE = 0.1f;
     SensorManager mSensorManager;
     private Sensor mAccelerometer;
 
     public final static String SCORE_KEY = "SCORE_KEY";
     public final static float PRACTICE_LENGTH = 30.f;
-    // public final static float MULTI_LENGTH = 30.f;
     public final static String TAG = "GameActivity";
 
     private String deviceId;
@@ -54,23 +52,10 @@ public class GameActivity extends Activity implements SensorEventListener {
         float x = event.values[0];
         float y = event.values[1];
         float z = event.values[2];
-        if (!mInitialized) {
-            mLastX = x;
-            mLastY = y;
-            mLastZ = z;
-            mInitialized = true;
-        } else {
-            float deltaX = Math.abs(mLastX - x);
-            float deltaY = Math.abs(mLastY - y);
-            float deltaZ = Math.abs(mLastZ - z);
-            if (deltaX > NOISE) mLastY++;
-            if (deltaY < NOISE) deltaY = (float)0.0;
-            if (deltaZ < NOISE) deltaZ = (float)0.0;
 
-            mLastX = x;
-            mLastY = y;
-            mLastZ = z;
-        }
+        mLastX = x;
+        mLastY = y;
+        mLastZ = z;
     }
 
     @Override

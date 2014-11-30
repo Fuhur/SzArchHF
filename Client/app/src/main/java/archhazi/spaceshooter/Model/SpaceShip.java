@@ -33,27 +33,11 @@ public class SpaceShip{
     public static final int PlayerColor = Color.RED;
     public static final int OpponentColor = Color.BLUE;
 
-    private float sideLength = -1;
-
-    private boolean present;
-
-    public float sideLength(){
-        if (sideLength < 0){
-            sideLength = (float)Math.sqrt(lengthRatio*lengthRatio + widthRatio*widthRatio/4);
-        }
-
-        return sideLength;
-    }
-
     public void move(float deltaX, float elapsedS){
 
         deltaX *= -1;
 
         deltaX *= shipVelocityX * elapsedS;
-
-        if (Math.abs(deltaX) > maxVelocityX * elapsedS){
-           // deltaX = Math.signum(deltaX) * maxVelocityX * elapsedS;
-        }
 
         getPosition().X += deltaX;
 
@@ -149,14 +133,9 @@ public class SpaceShip{
 
     public SpaceShip() {
         this(new MyVector(0.5f,0f));
-        this.present = true;
     }
 
     public SpaceShip(MyVector position){
-        this.position = position;
-    }
-
-    public void setPosition(MyVector position) {
         this.position = position;
     }
 
@@ -170,10 +149,6 @@ public class SpaceShip{
 
         invincible = true;
         invincibleSince = 0;
-    }
-
-    public boolean isPresent() {
-        return present;
     }
 
     public boolean isInvincible() {

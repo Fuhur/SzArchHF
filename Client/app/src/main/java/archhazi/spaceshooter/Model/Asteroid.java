@@ -45,11 +45,6 @@ public class Asteroid{
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.GRAY);
 
-        float radX = Utility.RatioXToPX(radius);
-        float radY = Utility.RatioYToPX(radius);
-        float centerX = Utility.RatioXToPX(position.X);
-        float centerY = Utility.RatioYToPX(position.Y-minY);
-
         if (true){
             canvas.drawCircle(   Utility.RatioXToPX(position.X),
                     Utility.RatioYToPX(1 - (position.Y - minY)),
@@ -66,9 +61,6 @@ public class Asteroid{
             path.close();
             canvas.drawPath(path,paint);
         }
-
-
-
 
         paint.setColor(Color.BLACK);
         for (Hole hole:holes){
