@@ -28,6 +28,7 @@ namespace SpaceOpponent
 
 		private long startTimeStamp;
 		private long delay;
+		private int length;
 
 		private Timer timer;
 
@@ -51,6 +52,7 @@ namespace SpaceOpponent
 
 				var delay = client.Delay(TimeInMillis());
 				startTimeStamp -= delay;
+				length = response.LevelLength;
 
 				timer = new Timer(50);
 				timer.Elapsed += timer_StartGame;
@@ -87,7 +89,7 @@ namespace SpaceOpponent
 			lastTime = actTime;
 
 			Y += elapsed / 1000.0f * 0.6f;
-			if (Y >= 5)
+			if (Y >= length)
 			{
 				lastTime = -1;
 				Y = 0;

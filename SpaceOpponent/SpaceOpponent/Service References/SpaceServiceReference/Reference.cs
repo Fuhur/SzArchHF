@@ -90,6 +90,9 @@ namespace SpaceOpponent.SpaceServiceReference {
         private int LevelSeedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OpponentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ReadyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -127,6 +130,19 @@ namespace SpaceOpponent.SpaceServiceReference {
                 if ((this.LevelSeedField.Equals(value) != true)) {
                     this.LevelSeedField = value;
                     this.RaisePropertyChanged("LevelSeed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Opponent {
+            get {
+                return this.OpponentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OpponentField, value) != true)) {
+                    this.OpponentField = value;
+                    this.RaisePropertyChanged("Opponent");
                 }
             }
         }
